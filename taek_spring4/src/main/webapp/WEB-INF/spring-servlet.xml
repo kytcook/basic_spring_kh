@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="url-mapping"
+			class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+			<property name="mappings">
+				<props>
+					<prop key="/Login.sp">auth-controller</prop>
+				</props>
+			</property>
+	</bean>				
+  	<bean id="emp-controller" class="com.spring4.mvc.AuthController">
+		<property name="methodNameResolver" ref="emp-resolver"/>
+  	</bean>
+	<bean id="auth-resolver" class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+		<property name="mappings">
+			<props>
+				<prop key="/Login.sp">login</prop>
+			</props>
+		</property>
+	</bean>	
+
+</beans>
