@@ -22,7 +22,7 @@ public class AuthDao {
 		Map<String,Object> pMap = new HashMap<>();
 		pMap.put("mem_id", "test");
 		pMap.put("mem_pw", "123");
-		memVO = sqlSessionTemplate.selectOne("login");
+		memVO = sqlSessionTemplate.selectOne("login",pMap);
 		logger.info(memVO);
 		return memVO;
 	}
