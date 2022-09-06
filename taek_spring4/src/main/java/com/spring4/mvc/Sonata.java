@@ -21,7 +21,7 @@ public class Sonata {
 		this.speed = speed;
 		this.carColor = carColor;
 	}
-	
+
 	public Sonata(int speed, String carName, String carColor) {
 		this.speed = speed;
 		this.carName = carName;

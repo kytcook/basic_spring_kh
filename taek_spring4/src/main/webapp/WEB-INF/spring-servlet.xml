@@ -4,6 +4,7 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	<bean id="default-handler-mapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
 	<bean name="myCar" class="com.spring4.mvc.Sonata"/>
+	<bean name="/di/myCar.sp" class="com.di.Pride"/>
 	<bean name="/di/hello.sp" class="com.spring4.mvc.HelloController"/>
 	<bean id="url-mapping"
 		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
@@ -16,9 +17,10 @@
 	<!-- xml에서 bean태그에 클래스 선언함 AuthController auth-controller = null;  -->
 	<bean id="auth-controller" class="com.spring4.mvc.AuthController">
 		<property name="methodNameResolver" ref="auth-resolver" />
+		<!-- property의 name은  -->
+		<property name="authLogic" ref="auth-Logic"/>
 	</bean>
-	<bean id="auth-resolver"
-		class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
+	<bean id="auth-resolver" class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
 		<property name="mappings">
 			<props>
 				<prop key="/login.sp">login</prop>

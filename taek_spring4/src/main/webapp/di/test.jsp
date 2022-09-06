@@ -53,12 +53,12 @@ spring창시자
 자원관리를 시스템에서 맡아주는게 효과적이지 않나?
 제어역전 가져왔다 - 스프링은...
 spring core.jar -> ApplicationContext, BeanFactory(빈을 관리한다.) -
-단 대신 클래스에 대한 등록은 개발자인 너가 해주세요 - 너는 업무 담당자이다.
+단, 대신 클래스에 대한 등록은 개발자인 너가 해주세요 - 너는 업무 담당자이다.
 
 객체자원관리 - 시점
 
 BeanFactory
-개겣를 관리하는 고급 설정 기법 제공
+개체를 관리하는 고급 설정 기법 제공
 org.springframework.beans 내에 속함
 모든 Bean을 늦게 로딩(Lazy laoding) 함
 

@@ -25,5 +25,6 @@
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/spring-expression-4.3.30.RELEASE.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/spring-core-4.3.30.RELEASE.jar"/>
 	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/mybatis-spring-2.0.6.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/spring-dao-2.0.8.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

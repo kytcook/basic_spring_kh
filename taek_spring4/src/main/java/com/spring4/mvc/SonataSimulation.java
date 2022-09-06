@@ -3,7 +3,7 @@ package com.spring4.mvc;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 // ApplicationContext 대 BeanFactory -> 컨테이너의 종류
-// 빈을 관기해준다.
+// 빈을 관리해준다.
 // 이른 인스턴스화, 게으른 인스턴스화
 // 빈의 정의는 xml문서에서 한다.(선언)
 public class SonataSimulation {

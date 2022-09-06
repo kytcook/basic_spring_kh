@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" id="WebApp_ID" version="4.0">
+  	<!-- context-param에 정의하는 내용은 서버가 기동하면서 읽으면 서버가 꺼질때 까지 기억해줘요 
+  	로그에 대한 설정은 공통된 관심사 이다. 공통된 관심사는 계속 유지되어야 한다.
+  	서버가 다운될때까지는..... 공통된 관심사를 분리하는 기술이 AOP 이다.
+  	web.xml에 수정하면 서버를 반드시 내렸다가 올려야 반영 됩니다.
+  	web.xml은 배치서술자 라고 하는데 없어도 서버는 기동되지만
+  	웹서비스에 공통된 관심사를 처리하기 위해서 혹은 한글처리, 서블릿과 매핑 등의 목적으로 사용되므로
+  	생략하지 않습니다.
+  	-->
+  	<context-param>
+  		<param-name>log4jConfigLocation</param-name>
+  		<param-value>/WEB-INF/classes/log4j.properties</param-value>
+  	</context-param>
+  	<context-param>
+  		<param-name>contextConfigLocation</param-name>
+  		<param-value>/WEB-INF/spring-service.xml
+  		            ,/WEB-INF/spring-data.xml
+  		</param-value>
+  	</context-param>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<servlet>
+		<servlet-name>FrontServlet</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<!-- init-param에 정의된 내용은 서블릿 요청이 있을때 마다 읽는다.(스캔) -->
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring-servlet.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+		
+	<servlet-mapping>
+		<servlet-name>FrontServlet</servlet-name>
+		<url-pattern>*.sp</url-pattern>
+	</servlet-mapping>
+</web-app>
