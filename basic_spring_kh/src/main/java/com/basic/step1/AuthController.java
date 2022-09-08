@@ -14,12 +14,12 @@ import com.vo.MemberVO;
 @Controller
 public class AuthController {// 스크립트 안해도 되고, if문 깔때기 안해도 되고 등등등
 	@Autowired
-	private AuthLogic authLogic = null;
-	@RequestMapping(value = "/login.sp4", method = RequestMethod.GET)
-	public String login(HttpServletRequest req, HttpServletResponse res) {
-		System.out.println("login 호출 성공");
-		MemberVO mVO = authLogic.login();
-		String path = "redirect:index.jsp";
-		return path;
-	}
+	   private AuthLogic authLogic = null;
+	   @RequestMapping(value= "/login.sp4", method = RequestMethod.GET)
+	   public String login(HttpServletRequest req, HttpServletResponse res) {
+	      System.out.println("dev_spring4 login 호출 성공");
+	      MemberVO mVO = authLogic.login();
+	      String path = "redirect:index.jsp";
+	      return path;
+	   }
 }

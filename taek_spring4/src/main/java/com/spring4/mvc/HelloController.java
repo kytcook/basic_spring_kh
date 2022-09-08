@@ -11,7 +11,7 @@ public class HelloController extends AbstractController {
 	Logger logger = Logger.getLogger(HelloController.class);
 	@Override
 	protected ModelAndView handleRequestInternal(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		Logger logger = Logger.getLogger("handleRequestInternal 호출 성공");
+		logger.info("handleRequestInternal 호출 성공");
 		ModelAndView mav = new ModelAndView();
 		// -> /di/hello.sp 이 요청에 대한 응답페이지 이름
 		// -> /WEB-INF/views/di/hello.jsp

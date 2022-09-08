@@ -4,6 +4,9 @@ public class Sonata {
 	String carColor = null;
 	int speed = 0;
 	int wheelNum = 0;
+	public void init() {
+		System.out.println("init호출 성공");
+	}
 	public Sonata() {
 		
 	}

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	<bean id="myDuck" class="com.di.MallardDuck">
+		<constructor-arg index="0" type="int" value="2"/>
+		<constructor-arg index="1" type="java.lang.String" value="청둥오리"/>
+	</bean>
+	<bean id="himDuck" class="com.di.MallardDuck" scope="prototype" />
+</beans>

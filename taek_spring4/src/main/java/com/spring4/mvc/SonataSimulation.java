@@ -20,18 +20,18 @@ public class SonataSimulation {
 	public static void main(String[] args) {
 		SonataSimulation ss = new SonataSimulation();
 		/*
-		 * id는 인스턴스변수명으로 생각하자 선언은 xml문서에서 선언된 클래스 정보를 얻어와서 자바코드에 쓸 수 있도록 제공하는 클랙스가 있다. 
+		 * id는 인스턴스변수명으로 생각하자 선언은 xml문서에서 선언된 클래스 
+		 * 정보를 얻어와서 자바코드에 쓸 수 있도록 제공하는 클랙스가 있다. 
 		 */
-		ss.methodA();
 		ApplicationContext context 
 		= new ClassPathXmlApplicationContext("com\\spring4\\mvc\\sonataBean.xml");
 		Sonata myCar = (Sonata)context.getBean("myCar");
 		Sonata herCar = (Sonata)context.getBean("herCar");//인스턴스화
-		// 어 그런데 생성자가 여러개 이자나??
-		// 이런 경우 그 중에 누가 호출되나요??
-		System.out.println(herCar.speed);// 0
-		System.out.println(herCar.carName);// null
-		System.out.println(herCar.carColor);// null
+		//어 그런데 생성자가 여러개 이자나???
+		//이런 경우 그 중에 누가 호출되나요?
+		System.out.println(herCar.speed);//0
+		System.out.println(herCar.carName);//null
+		System.out.println(herCar.carColor);//null
 		System.out.println(myCar);
 		System.out.println(myCar.speed);
 		System.out.println(myCar.carName);
@@ -40,11 +40,10 @@ public class SonataSimulation {
 		System.out.println(myCar);
 		System.out.println(myCar.speed);
 		System.out.println(myCar.carName);
-		myCar = null;//30번에서 31번으로 갈 때 Candidate상태에 빠진다.
-		// 26번에 생성된 객체는 쓰레기값으로 인식되어 자원을 회수당한다.
-		// 
+		myCar = null;//30번에서 31번으로 갈때 Candidate상태에 빠진다.
+		//26번에 생성된 객체는 쓰레기값으로 인식되어 자원을 회수 당함
 		myCar = new Sonata();
-		System.out.println("null 초기화 후에 비교");
+		System.out.println("null초기화 후에 비교. "+myCar);
 		System.out.println(myCar.speed);
 		System.out.println(myCar.carName);
 		

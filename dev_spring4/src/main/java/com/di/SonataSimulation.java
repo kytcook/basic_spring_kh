@@ -31,15 +31,22 @@ public class SonataSimulation {
 		// 자신들의 속내용이나 코드가 노출되지 않도록...
 		// myBatis는 프레임워크 인가? 아님 라이브러리인가?
 		Sonata yourCar = new Sonata();//여기의 주소번지와
+		System.out.println(yourCar);
 		//객체 소멸
 		yourCar = null;//candidate상태로 전환되는코드임. null로 초기화 한 후
 		yourCar = new Sonata();//다시 인스턴스화 - 새로 주소번지 채번이 된다
+		System.out.println(yourCar);
 		// yourCar == yourCar => false
 		ApplicationContext context = 
 				new ClassPathXmlApplicationContext("com\\di\\sonataBean.xml");
 		//scope를 생략한 경우임
 		//<bean id="myCar" class="com.di.Sonata"/>
 		Sonata myCar = (Sonata)context.getBean("myCar");
+		System.out.println(myCar);
+		myCar = null;//역할이 없다????? 왜지??
+		myCar = (Sonata)context.getBean("myCar");
+		System.out.println(myCar);
+		
 		Sonata myCar2 = (Sonata)context.getBean("myCar");
 		System.out.println(myCar == myCar2);//t:싱글톤
 		//scope를 prototyp으로 한 경우임

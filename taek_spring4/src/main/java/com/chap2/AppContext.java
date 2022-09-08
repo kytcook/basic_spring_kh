@@ -18,7 +18,6 @@ import org.springframework.context.annotation.Configuration;
  * 
  * Spring Boot 
  * 
- * 
  * */
 
 // 스프링 컨테이너가 관리를 하는 클래스임

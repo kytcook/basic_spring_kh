@@ -4,6 +4,35 @@
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 	<bean id="default-handler-mapping" class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"/>
 	<bean name="/di/myCar.sp" class="com.di.Pride"/>	
+	<bean name="/di/insaList.sp" class="com.di.ListController">
+	<!-- property의 이름은 setter메소드이름과 반드시(꼭) 같아야 한다 -->
+		<property name="insaBean">
+			<list>
+				<value>Hi!!!</value>
+				<value>Have a good time!</value>
+				<value>Have a nice day!</value>
+			</list>
+		</property>
+	</bean>
+	<bean name="/di/insaMap.sp" class="com.di.MapController">
+	<!-- property의 이름은 setter메소드이름과 반드시(꼭) 같아야 한다 -->
+		<property name="insaMsg">
+			<map>
+				<entry>
+					<key><value>one</value></key>
+					<value>안녕!</value>
+				</entry>
+				<entry>
+					<key><value>two</value></key>
+					<value>좋은아침입니다</value>
+				</entry>
+				<entry>
+					<key><value>three</value></key>
+					<value>굿밤</value>
+				</entry>
+			</map>
+		</property>
+	</bean>
 	<bean id="url-mapping"
 			class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
 			<property name="mappings">
@@ -24,8 +53,9 @@
 			</props>
 		</property>
 	</bean>	
+	<!-- ModelAndView 사용시 배포 위치에 대한 선언 -->
 	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<property name="prefix" value="/WEB-INF/views/" />
 		<property name="suffix" value=".jsp" />
-	</bean>	
+	</bean>
 </beans>

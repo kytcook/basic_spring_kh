@@ -30,7 +30,7 @@ public class AuthDao {
 		logger.info("login 호출 성공");
 		MemberVO memVO = null;
 		Map<String, Object> pMap = new HashMap<>();
-		pMap.put("mem_id", "test");
+		pMap.put("mem_id", "tomato");
 		pMap.put("mem_pw", "123");
 		// selectOne은 조회건 수가 반드시 한건이어야 한다. => Too many.....
 		memVO = sqlSessionTemplate.selectOne("login", pMap);

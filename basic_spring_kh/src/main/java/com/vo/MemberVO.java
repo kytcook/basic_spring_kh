@@ -1,7 +1,7 @@
 package com.vo;
 
 public class MemberVO {
-	private int 	 mem_no     =0;
+	private int    mem_no     =0;
 	private String mem_id     =null;
 	private String mem_pw     =null;
 	private String mem_name   =null;

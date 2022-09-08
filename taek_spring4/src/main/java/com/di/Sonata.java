@@ -17,17 +17,6 @@ public class Sonata extends Object {
 	public Sonata() {
 		logger.info("Sonata 디폴트 생성자 호출");
 	}
-	
-	// 문법적인 문제는 해결했지만 호출(URL-웹)은 불가하다.
-	protected ModelAndView handleRequestInternal(HttpServletRequest req, HttpServletResponse res) throws Exception {
-		Logger logger = Logger.getLogger("handleRequestInternal 호출 성공");
-		ModelAndView mav = new ModelAndView();
-		// -> /di/hello.sp 이 요청에 대한 응답페이지 이름
-		// -> /WEB-INF/views/di/hello.jsp
-		mav.setViewName("hello");
-		return mav;
-	}
-
 	public Sonata(String carColor, int speed) {
 		this.carColor = carColor;
 		this.speed = speed;
