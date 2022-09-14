@@ -21,7 +21,6 @@ public class TestLogic {
 		logger.info("testList 호출 성공");
 		List<Map<String, Object>> testList = null;
 		testList = testDao.testList(pmap);
-		
 		return testList;
 	}
 
@@ -31,7 +30,5 @@ public class TestLogic {
 
 	public void testInsertAll() {
 		testDao.testInsertAll();
-		
-		
 	}
 }

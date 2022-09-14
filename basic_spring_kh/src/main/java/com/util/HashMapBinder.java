@@ -36,7 +36,6 @@ public class HashMapBinder {
 	String encType = "utf-8";
 	// 첨부파일의 최대 크기
 	int maxSize = 5*1024*1024; //5MB
-	public HashMapBinder() {}
 	public HashMapBinder(HttpServletRequest req) {
 		this.req = req;
 		realFolder = "D:\\java_study\\workspace_java\\kh_javaAC\\taek_web\\src\\main\\webapp\\pds";

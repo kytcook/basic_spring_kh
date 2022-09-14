@@ -5,26 +5,26 @@
 		INSERT ALL
 		 <foreach item="item" index="index" collection="list" separator=" ">
 		 	INTO test(test_no, test_title, test_content) VALUES(#{item.test_no},#{item.test_title},#{item.test_content})
-		 </foreach>
-		 SELECT * FROM dual
+		 </foreach>	
+		 SELECT * FROM dual	
 	</update>
 	<select id="testList" parameterType="map" resultType="map">
-		SELECT test_no, test_title, test_content
+		SELECT test_no, test_title, test_content 
 		  FROM test
-		<trim prefix="WHERE" prefixOverrides="AND |OR ">
+		<trim prefix="WHERE" prefixOverrides="AND |OR ">  
 			<if test="test_title !=null">
 				test_title like '%'||#{keyword}||'%'
 			</if>
 			<if test="test_content !=null">
 				test_content like '%'||#{keyword}||'%'
-			</if>
+			</if>			
 		</trim>
 	</select>
 	<delete id="testDeleteAll" parameterType="list">
 		DELETE FROM test
 		 WHERE test_no IN
 		 <foreach item="item" index="index" collection="array"
-     		   open="(" separator="," close=")">
+        		open="(" separator="," close=")">
 		 	#{item}
 		 </foreach>
 	</delete>

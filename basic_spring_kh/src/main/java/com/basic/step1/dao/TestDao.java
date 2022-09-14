@@ -5,14 +5,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.ibatis.annotations.Delete;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.basic.step1.controller.TestController;
 
 @Service
 public class TestDao {
@@ -34,7 +32,7 @@ public class TestDao {
 		for(int i=0;i<atestnos.length;i++) {
 			list.add(i, atestnos[i]);
 		}
-		sqlSessionTemplate.delete("testDeleteAll", list);
+		sqlSessionTemplate.delete("testDeleteAll", atestnos);
 	}
 
 	public void testInsertAll() {
@@ -56,7 +54,6 @@ public class TestDao {
 		pMap.put("test_content", "멀티추가3");
 		list.add(pMap);
 		sqlSessionTemplate.delete("testInsertAll", list);
-		
 	}
 	
 }

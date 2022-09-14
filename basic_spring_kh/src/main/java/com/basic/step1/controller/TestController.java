@@ -39,7 +39,7 @@ public class TestController {
 		return "forward:testList.jsp";
 //		return "test/testList";
 	}
-	// localhost:9000/step1/test/testDeleteAll.sp4?deptnos=10/30/50
+	// localhost:9000/step1/test/testDeleteAll.sp4?testnos=1/3/5
 	@GetMapping("testDeleteAll")
 	public String testDeleteAll(@RequestParam String testnos) {
 		logger.info(testnos);
