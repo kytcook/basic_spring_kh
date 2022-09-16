@@ -285,7 +285,7 @@
 %>
 <!-- 댓글 화면 추가 시작 -->
     <div id="dlg_boardIns" footer="#tb_boardIns" class="easyui-dialog" title="글쓰기" data-options="modal:true,closed:true" style="width:600px;height:400px;padding:10px">
-        <form id="f_boardIns" method="get" enctype="multipart/form-data" action="./boardInsert.sp4">  
+        <form id="f_boardIns" method="post" enctype="multipart/form-data" action="./boardInsert.sp4">  
         <!-- <form id="f_boardIns" method="get" action="./boardInsert.sp4"> -->
 	    <input type="hidden" id="b_no" name="b_no" value="0">
 	    <input type="hidden" id="b_group" name="b_group" value="0">

@@ -14,6 +14,7 @@ import org.apache.log4j.Logger;
  * 산업과 관련된 테이블의 컬럼 수는 100개 이상 200개 인 것도 다반사 임
  * 따라서 스프링과 같은 프레임워크에서는 반복되는 코드를 줄이기 위한 유틸 기능의 클래스도 지원함
  */
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -40,6 +41,13 @@ public class HashMapBinder {
 		this.req = req;
 		realFolder = "D:\\java_study\\workspace_java\\kh_javaAC\\taek_web\\src\\main\\webapp\\pds";
 	}
+	// 바이너리 타입을 받을 땐 post방식으로 처리할 것
+	// 단 기존 request.getParameter로 값을 못 읽어옴
+	// 스프링에서는 이를 위해 MultipartHttpServletRequest를 지원하고 있음.
+	public HashMapBinder(MultipartHttpServletRequest mreq) {
+		this.mreq = mreq;
+	}
+	
 	public void multiBind(Map<String,Object> pMap) {
 		pMap.clear();
 		try {

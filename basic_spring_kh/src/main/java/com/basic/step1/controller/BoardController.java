@@ -1,5 +1,8 @@
 package com.basic.step1.controller;
 
+import java.io.BufferedOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -14,8 +17,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.basic.step1.logic.BoardLogic;
+import com.util.HashMapBinder;
 
 @Controller
 @RequestMapping("/board/*")
@@ -72,6 +77,41 @@ public class BoardController {
 	public Object boardInsert(@RequestParam Map<String, Object> pMap, @RequestParam(value="bs_file", required=false) MultipartFile bs_file) {
 		logger.info("boardInsert 호출 성공 : " + pMap);
 		int result = 0;
+		result = boardLogic.boardInsert(pMap);
+		return "redirect:boardList.sp4";
+	}
+	
+//	@GetMapping("boardInsert.sp4")
+	@PostMapping("boardInsert.sp4")
+	public String boardInsert(MultipartHttpServletRequest mpRequest, @RequestParam(value="bs_file", required=false) MultipartFile bs_file) {
+		logger.info("boardInsert 호출 성공");
+		int result = 0;
+		Map<String,Object> pMap = new HashMap<>();
+		HashMapBinder hmb = new HashMapBinder(mpRequest);
+		hmb.mbind(pMap);
+		if(!bs_file.isEmpty()) {
+			String filename = HangulConversion.toKor(bs_file.getOriginalFilename())
+			String savePath = "D:\\workspace_spring\\basic\\src\\main\\webapp\\pds";
+			String fullPath = savePath+"\\"+filename;
+			try {
+				File file = new File(fullPath);
+				byte[] bytes = bs_file.getBytes();
+				BufferedOutputStream bos = 
+						new BufferedOutputStream(
+								new FileOutputStream(file));
+				bos.write(bytes);
+				bos.close();
+				long size = file.length();
+				double d_size = Math.floor(size/1024.0);//kb
+				logger.info("size:"+d_size);
+				pMap.put("bs_file", filename);
+				pMap.put("bs_size", d_size);
+			} catch (Exception e) {
+				e.printStackTrace();
+						
+			}
+		}
+		
 		result = boardLogic.boardInsert(pMap);
 		return "redirect:boardList.sp4";
 	}
