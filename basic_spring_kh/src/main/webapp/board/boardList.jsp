@@ -16,7 +16,7 @@
 		size = boardList.size();
 	}
 	// 한 페이지에 출력될 로우의 수를 담음
-	int numPerPage = 10  ;
+	int numPerPage = 10;
 	// 내가 바라보는 페이지 번호를 담는 변수
 	int nowPage = 0;
 	if(request.getParameter("nowPage")!=null){
@@ -44,14 +44,14 @@
 		alert("getBoardList호출");    
 		// 사용자가 선택한 콤보박스에 value가 담김 - b_title, or b_content or b_writer
 		cb_value = user_combo;
-		tb_value = $("#tb_search").val()// 사용자가 입력한 조건 검색 문자열
+		tb_value = $("#tb_search").val();// 사용자가 입력한 조건 검색 문자열
 		console.log("콤보박스 값 : "+cb_value+", 사용자가 입력한 키워드: "+tb_value);
-		location.href = "boardList.sp4?cb_serach="+cb_value+"&tb_search="+tb_value+"&b_date="+v_date;
+		location.href = "boardList.sp4?cb_search="+cb_value+"&tb_search="+tb_value+"&b_date="+v_date;
 		}	
 	function boardDetail(b_no){
 	}
     function fileDown(fname){
-    	location.href="downLoad.jsp?bs_file="+fname;
+    	location.href="downLoad.jsp?b_file="+fname;
     }	
 </script>
 </head>
@@ -201,7 +201,6 @@
         		<td>
 <%
 	if(rMap.get("B_FILE")!=null){ 
-		
 %>        		        		
         		<a href="javascript:fileDown('<%=rMap.get("B_FILE") %>')">
         		<%=rMap.get("B_FILE")%>
@@ -238,7 +237,7 @@
         </select>
         <input id="tb_search" name="tb_search" class="easyui-textbox" style="width:320px">
         &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                작성일: <input id="b_date" class="easyui-datebox" name="b_date" style="width:110px">
+                작성일: <input id="db_date" class="easyui-datebox" name="b_date" style="width:110px">
 	<!-- 버튼 추가 화면 시작 --> 
 	    <div id="ft" style="padding:2px 5px;">
 	        <a id="crudBtnSel" href="#" class="easyui-linkbutton" iconCls="icon-search" plain="true">조회</a>

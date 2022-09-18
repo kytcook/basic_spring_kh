@@ -16,8 +16,10 @@ import org.apache.log4j.Logger;
  */
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.basic.step1.controller.HangulConversion;
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
+
 /*
  * 텍스트 파일 처리(문자열 처리)- 숫자도 문자열 처리 -  숫자도 문자열로 처리 후 변경해서 출력
  * 바이너리 파일 처리(문자+숫자 파일) - 첨부파일은 바이너리 코드
@@ -29,6 +31,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 public class HashMapBinder {
 	Logger logger = Logger.getLogger(HashMapBinder.class);
 	HttpServletRequest req = null;
+	MultipartHttpServletRequest mreq = null;
 	// 첨부 파일 처리에 필요한 변수 선언 - 바이너리 타입 처리를 위해
 	MultipartRequest multi = null;
 	// 첨부 파일 업로드의 물리적인 경로 이름
@@ -36,67 +39,86 @@ public class HashMapBinder {
 	// 첨부파일의 한글 처리
 	String encType = "utf-8";
 	// 첨부파일의 최대 크기
-	int maxSize = 5*1024*1024; //5MB
+	int maxSize = 5 * 1024 * 1024; // 5MB
+
 	public HashMapBinder(HttpServletRequest req) {
 		this.req = req;
-		realFolder = "D:\\java_study\\workspace_java\\kh_javaAC\\taek_web\\src\\main\\webapp\\pds";
+		realFolder = "D:\\java_study\\workspace_spring\\basic_spring_kh\\src\\main\\webapp\\pds";
 	}
+
 	// 바이너리 타입을 받을 땐 post방식으로 처리할 것
 	// 단 기존 request.getParameter로 값을 못 읽어옴
 	// 스프링에서는 이를 위해 MultipartHttpServletRequest를 지원하고 있음.
 	public HashMapBinder(MultipartHttpServletRequest mreq) {
 		this.mreq = mreq;
 	}
-	
-	public void multiBind(Map<String,Object> pMap) {
+
+	public void multiBind(Map<String, Object> pMap) {
 		pMap.clear();
 		try {
 			multi = new MultipartRequest(req, realFolder, maxSize, encType, new DefaultFileRenamePolicy());
 		} catch (Exception e) {
-			logger.info("Exception: "+e.toString());
+			logger.info("Exception: " + e.toString());
 		}
-		Enumeration<String> em = multi.getParameterNames( );
-		while(em.hasMoreElements()) {
+		Enumeration<String> em = multi.getParameterNames();
+		while (em.hasMoreElements()) {
 			String key = em.nextElement();
-			pMap.put(key,  multi.getParameter(key));
+			pMap.put(key, multi.getParameter(key));
 		}
 		// 기존에 클라이언트에서 받아온 정보를 처리하기
 		// 첨부파일에 대한 정보 받아오기
-		Enumeration<String> files = multi.getFileNames(); //Enumeration인터페이스 이름이다 - 
+		Enumeration<String> files = multi.getFileNames(); // Enumeration인터페이스 이름이다 -
 		// 만일 폼 전송에서 업로드할 파일명이 존재하면...
-		if(files !=null) {
+		if (files != null) {
 			// 업로드 대상 파일을 객체로 만듦
 			File file = null;
-			while(files.hasMoreElements()) {
+			while (files.hasMoreElements()) {
 				String fname = files.nextElement();
 				String filename = multi.getFilesystemName(fname);
-				pMap.put("bs_file", filename);
-				if(filename !=null && filename.length() >1) {
-					file = new File(realFolder+"\\"+filename);
+				pMap.put("b_file", filename);
+				if (filename != null && filename.length() > 1) {
+					file = new File(realFolder + "\\" + filename);
 				}
 				logger.info(file);
 			}
 			// 첨부파일에 크기를 담을 수 있는 변수 선언
 			double size = 0;
-			if(file!=null) {
+			if (file != null) {
 				size = file.length();
-				size = size/1024.0;//byte -> kbyte
+				size = size / 1024.0;// byte -> kbyte
 				pMap.put("bs_size", size);
 			}
 		}
 	}
+
 	public void bind(Map<String, Object> pMap) {
 		// 사용자가 입력한 값을 담을 맵이 외부 클래스에서 인스턴스화 되어 넘어오니까 초기화 처리 후 사용함
-		logger.info(pMap);//pMap은 이 공통 코드를 사용하는 곳에서 주입됩니다 
+		logger.info(pMap);// pMap은 이 공통 코드를 사용하는 곳에서 주입됩니다
 		pMap.clear(); // 초기화를 해줌
 		// html화면에 정의된 input name값들을 모두 담아줌
-		Enumeration<String> em = req.getParameterNames( );
-		while(em.hasMoreElements()) {
+		Enumeration<String> em = req.getParameterNames();
+		while (em.hasMoreElements()) {
 			// key값 꺼내기
 			String key = em.nextElement(); // b_title, b_writer, b_content, b_pw 등
 			logger.info(req.getParameter(key));
 			pMap.put(key, req.getParameter(key));
 		}
-		logger.info("pMap ===> "+ pMap);
-	}//////////end of bind
+		logger.info("pMap ===> " + pMap);
+	}////////// end of bind
+	
+	// Get방식 한글처리 - server.xml에서 URIEncoding="utf-8"
+	// Post방식 한글처리 - HangulConversion.toUTF(mreq.getParameter(key));
+	public void mbind(Map<String, Object> pMap) {
+		// 사용자가 입력한 값을 담을 맵이 외부 클래스에서 인스턴스화 되어 넘어오니까 초기화 처리 후 사용함
+		logger.info(pMap);// pMap은 이 공통 코드를 사용하는 곳에서 주입됩니다
+		pMap.clear(); // 초기화를 해줌
+		// html화면에 정의된 input name값들을 모두 담아줌
+		Enumeration<String> em = mreq.getParameterNames();
+		while (em.hasMoreElements()) {
+			// key값 꺼내기
+			String key = em.nextElement(); // b_title, b_writer, b_content, b_pw 등
+			pMap.put(key, HangulConversion.toUTF(mreq.getParameter(key)));
+			logger.info("pMap ===> " + pMap);
+		} ////////// end of bind
+	}
 }

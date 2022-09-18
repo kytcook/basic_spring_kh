@@ -74,7 +74,7 @@ public class BoardController {
 	}
 
 	@GetMapping("boardInsert.sp4")
-	public Object boardInsert(@RequestParam Map<String, Object> pMap, @RequestParam(value="bs_file", required=false) MultipartFile bs_file) {
+	public Object boardInsert(@RequestParam Map<String, Object> pMap, @RequestParam(value="b_file", required=false) MultipartFile b_file) {
 		logger.info("boardInsert 호출 성공 : " + pMap);
 		int result = 0;
 		result = boardLogic.boardInsert(pMap);
@@ -82,30 +82,36 @@ public class BoardController {
 	}
 	
 //	@GetMapping("boardInsert.sp4")
-	@PostMapping("boardInsert.sp4")
-	public String boardInsert(MultipartHttpServletRequest mpRequest, @RequestParam(value="bs_file", required=false) MultipartFile bs_file) {
+	@PostMapping("boardInsert.sp4") 
+	public String boardInsert(MultipartHttpServletRequest mpRequest, @RequestParam(value="b_file", required=false) MultipartFile b_file) {
 		logger.info("boardInsert 호출 성공");
 		int result = 0;
 		Map<String,Object> pMap = new HashMap<>();
 		HashMapBinder hmb = new HashMapBinder(mpRequest);
 		hmb.mbind(pMap);
-		if(!bs_file.isEmpty()) {
-			String filename = HangulConversion.toKor(bs_file.getOriginalFilename())
-			String savePath = "D:\\workspace_spring\\basic\\src\\main\\webapp\\pds";
+		if(!b_file.isEmpty())  {
+			String filename = HangulConversion.toUTF(b_file.getOriginalFilename());
+			logger.info("한글 처리 테스트 : "+filename);
+			String savePath = "D:\\java_study\\workspace_spring\\basic_spring_kh\\src\\main\\webapp\\pds";
+			// 파일에 대한 풀 네임 담기
 			String fullPath = savePath+"\\"+filename;
 			try {
+				// File객체는 파일명을 객체화 해줌
 				File file = new File(fullPath);
-				byte[] bytes = bs_file.getBytes();
+				// board_sub_t에 파일크기를 담기 위해 계산
+				byte[] bytes = b_file.getBytes();
 				BufferedOutputStream bos = 
 						new BufferedOutputStream(
 								new FileOutputStream(file));
+				// write : 실제로 파일 내용이 채워짐 / close : 사용한자원을 보안+자원효율을 위해 닫아주는 것이 원칙이다.
 				bos.write(bytes);
 				bos.close();
 				long size = file.length();
 				double d_size = Math.floor(size/1024.0);//kb
 				logger.info("size:"+d_size);
-				pMap.put("bs_file", filename);
+				pMap.put("b_file", filename); 
 				pMap.put("bs_size", d_size);
+				logger.info("파일정보:"+pMap.get("b _file")+", "+pMap.get("b_size"));
 			} catch (Exception e) {
 				e.printStackTrace();
 						

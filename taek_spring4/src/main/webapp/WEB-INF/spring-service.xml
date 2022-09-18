@@ -1,8 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+	xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.3.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+<!--  
+	AOP는 공통적으로 사용하는 것들에 대한 의존관계의 복잡성과 코드의 중복성을 해소해주는 프로그래밍 기법.
+	(con.setAutoCommit(false); con.commit(); con.setAutoCommit(true);
+	코드의 중복성??
+	AOP의 역할? - 공통된 관심사(트랜잭션 처리)를 가진 클래스 계층을 분리해줌.(XXXLogic.java)
+	개입을 할 수 있다.(before, after)
+	DI가 소프트웨어의 컴포넌트 결합도를 낮춘다면
+	AOP는 어플리케이션 전체에 걸쳐 사용도는 기능들을 재사용할 수 있게 해줌
+	AOP를 통해서 얻을 수 있는 장점은?
+	별도의 자바코드를 추가하지 않고도 트랜잭션 처리가 가능하다???
+	
+	어떤 클래스에 어떤 메소드에 적용할 것인가?
+	어노테이션을 사용하는 경우와 그렇지 않은 경우
+	어노테이션은 클래스 안에 메소드안에 직접 작성하므로 예외
+	: 정규식을 이용해서 적용할 수 있게 하였다.
+	: expression속성을 이용해서 설정할 수 있다.
+	expression(* com.mvc.*Logic.*(..))
+		-> return type이 any tpye이고 0개 이상의 any type parameter를 가진
+		클래스 이름이 Logic으로 끝나고 메소드이름은 모든 메소드에 대해서 적용됨
+-->
+	
+	
 	<bean id="auth-logic" class="com.spring4.mvc.AuthLogic">
 		<property name="authDao" ref="auth-dao" />
 	</bean>
+	<aop:config>
+		<aop:pointcut id="point-cut" expression="execution(* com.spring4.tr.*Logic.*(..))" />
+		<aop:advisor advice-ref="tx-advice" pointcut-ref="point-cut"/>
+	</aop:config>
+	<tx:advice id="tx-advice" transaction-manager="transactionManager">
+		<tx:attributes>
+			<tx:method name="do*" />
+		</tx:attributes>
+	</tx:advice>
 </beans>

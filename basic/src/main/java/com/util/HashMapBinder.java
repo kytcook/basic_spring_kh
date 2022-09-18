@@ -7,6 +7,7 @@ import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.log4j.Logger;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.oreilly.servlet.MultipartRequest;
 import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
@@ -21,6 +22,7 @@ import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 public class HashMapBinder {
 	Logger logger = Logger.getLogger(HashMapBinder.class);
 	HttpServletRequest req = null;
+	MultipartHttpServletRequest mreq = null;
 	//첨부 파일 처리에 필요한 변수 선언 - 바이너리 타입 처리를 위해
 	MultipartRequest multi = null;
 	//첨부 파일 업로드의 물리적인 경로 이름
@@ -32,6 +34,12 @@ public class HashMapBinder {
 	public HashMapBinder(HttpServletRequest req) {
 		this.req = req;
 		realFolder = "C:\\Users\\user1\\git\\dev_java20220415\\dev_web\\src\\main\\webapp\\pds";
+	}
+	//바이너리 타입을 받을 땐 post방식으로 처리할것
+	//단 기존 request.getParameter로 값을 못 읽어옴
+	//스프링에서는 이를 위해 MultipartHttpServletRequest를 지원하고 있음
+	public HashMapBinder(MultipartHttpServletRequest mreq) {
+		this.mreq = mreq;
 	}
 	public void multiBind(Map<String,Object> pMap) {
 		pMap.clear();
@@ -80,6 +88,21 @@ public class HashMapBinder {
 			//key값 꺼내기
 			String key = em.nextElement();//b_title, b_writer, b_content, b_pw 등
 			pMap.put(key, req.getParameter(key));
+		}
+		logger.info(pMap);
+	}//////////end of bind
+	//Get방식 한글처리 - server.xml에서 URIEncoding="utf-8"
+	//Post방식 한글처리 - HangulConversion.toUTF(mreq.getParameter(key));
+	public void mbind(Map<String,Object> pMap) {
+		//사용자가 입력한 값을 담을 맵이 외부 클래스에서 인스턴스화 되어 넘어오니까
+		//초기화 처리 후 사용함
+		pMap.clear();//  초기화를 해줌
+		//html화면에 정의된 input name값들을 모두 담아줌
+		Enumeration<String> em = mreq.getParameterNames();
+		while(em.hasMoreElements()) {
+			//key값 꺼내기
+			String key = em.nextElement();//b_title, b_writer, b_content, b_pw 등
+			pMap.put(key, HangulConversion.toUTF(mreq.getParameter(key)));
 		}
 		logger.info(pMap);
 	}//////////end of bind

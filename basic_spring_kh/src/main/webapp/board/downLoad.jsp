@@ -3,11 +3,11 @@
 <%@ page import="java.io.*,java.net.*" %>    
 <%
 //사용자 화면으로 부터 파일명을 받아서 저장함.
-	String b_file = request.getParameter("bs_file");
+	String b_file = request.getParameter("b_file");
 	String fname = b_file;
 	//out.print("b_file: 8->euc"+b_file);		
 	//out.print("<br>");		
-	String filePath = "D:\\java_study\\workspace_java\\kh_javaAC\\taek_web\\src\\main\\webapp\\pds"; // 절대경로.	
+	String filePath = "D:\\java_study\\workspace_spring\\basic_spring_kh\\src\\main\\webapp\\pds"; // 절대경로.	
 	//가져온 파일이름을 객체화 시켜줌. - 파일이 있는 물리적인 경로가 필요함.
 	File file = new File(filePath,b_file.trim());
  	String mimeType = getServletContext().getMimeType(file.toString());
@@ -54,4 +54,12 @@
 		if(sos != null) sos.close();
 		if(fis != null) fis.close();
 	}
-%>  
+%>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>다운로드</title>
+</head>
+<body>
+</body>
+</html>

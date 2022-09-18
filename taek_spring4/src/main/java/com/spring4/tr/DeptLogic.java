@@ -1,0 +1,20 @@
+package com.spring4.tr;
+
+import java.util.Map;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class DeptLogic {
+	Logger logger = Logger.getLogger(DeptLogic.class);
+	
+	@Autowired
+	private DeptDao deptDao = null;
+	public int deptInsert(Map<String, Object> pMap) {
+		logger.info("deptInsert 호출");
+		int result = 0;
+		result = deptDao.deptInsert(pMap);
+		return 0;
+	}
+
+}
