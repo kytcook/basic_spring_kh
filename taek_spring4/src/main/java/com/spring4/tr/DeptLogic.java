@@ -10,6 +10,9 @@ public class DeptLogic {
 	
 	@Autowired
 	private DeptDao deptDao = null;
+	public void setDeptDao(DeptDao deptDao) {
+		this.deptDao = deptDao;
+	}
 	public int deptInsert(Map<String, Object> pMap) {
 		logger.info("deptInsert 호출");
 		int result = 0;

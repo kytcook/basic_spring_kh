@@ -29,7 +29,8 @@ public class EmpLogic {
 			dmap.put("deptno", 89);
 			dmap.put("dname", "개발부");
 			dmap.put("loc", "부산");
-			deptDao.deptInsert(emap);
+			deptDao.deptInsert(dmap);
+			empDao.empInsert(emap);
 		} catch (DataAccessException de) {
 			throw de;
 		}

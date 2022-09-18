@@ -31,6 +31,13 @@
 	<bean id="auth-logic" class="com.spring4.mvc.AuthLogic">
 		<property name="authDao" ref="auth-dao" />
 	</bean>
+	<bean id="dept-logic" class="com.spring4.tr.DeptLogic">
+		<property name="deptDao" ref="dept-dao" />
+	</bean>
+	<bean id="emp-logic" class="com.spring4.tr.EmpLogic">
+		<property name="empDao" ref="emp-dao" />
+		<property name="deptDao" ref="dept-dao" />
+	</bean>
 	<aop:config>
 		<aop:pointcut id="point-cut" expression="execution(* com.spring4.tr.*Logic.*(..))" />
 		<aop:advisor advice-ref="tx-advice" pointcut-ref="point-cut"/>

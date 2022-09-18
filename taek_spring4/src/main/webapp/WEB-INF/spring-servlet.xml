@@ -37,8 +37,10 @@
 	<bean id="url-mapping"
 		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
 		<property name="mappings"><!-- 여긴 건드리지않는다. 컨벤션 -->
+		<!-- 어떤 컨트롤러를 탈지를 결정해주는 prop의 키값 -->
 			<props>
 				<prop key="/login.sp">auth-controller</prop>
+				<prop key="/doEmp.sp">emp-controller</prop>
 			</props>
 		</property>
 	</bean>
@@ -63,6 +65,7 @@
 	<bean id="emp-resolver" class="org.springframework.web.servlet.mvc.multiaction.PropertiesMethodNameResolver">
 		<property name="mappings">
 			<props>
+			<!-- 메소드이름을 찾기위한 prop값 -->
 				<prop key="/doEmp.sp">doEmp</prop>
 			</props>
 		</property>
