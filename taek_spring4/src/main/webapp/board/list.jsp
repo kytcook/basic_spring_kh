@@ -5,7 +5,7 @@
 	List<Map<String,Object>> boardList = (List)request.getAttribute("boardList");
 	out.print(boardList);// 리액트 조합 -> JSON포맷으로 받아낸다.
 	// @Controller - 페이지처리
-	// @RestController - 직접 바로 JSON으로 받아낼 수 있다.
+	// @RestController - 직접 바로 JSON으로 받아낼 수 있다. UI템플릿을 지원하기 위해서
 %>
 <!DOCTYPE html>
 <html>
