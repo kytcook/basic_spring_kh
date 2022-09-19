@@ -28,18 +28,20 @@
 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactory" />	
 	</bean>
+	<bean id="board-dao" class="com.spring4.mvc.BoardDao">
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/><!-- 자바랑 xml사이에 객체주입 -->
+	</bean>
 	<bean id="auth-dao" class="com.spring4.mvc.AuthDao">
-		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"></property>
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
 	</bean>
 	<bean id="dept-dao" class="com.spring4.tr.DeptDao">
-		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"></property>
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
 	</bean>
 	<bean id="emp-dao" class="com.spring4.tr.EmpDao">
-		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"></property>
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate"/>
 	</bean>
 </beans>
 <!-- 
 	spring-jdbc.jar를 매번 이런식으로 다운로드 받고 WEB-INF아래 lib에 매번 배포해야하는건가?
 	또 클래스간에 의존관계도 파악해서 넣어야 한다는데, 어떤애랑 어떤거랑 의존관계가 있는지 일일이 내가 파악하고 결정해서 넣어야 한다?
-	
  -->

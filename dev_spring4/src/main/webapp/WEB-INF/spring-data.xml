@@ -16,6 +16,10 @@
 			<value>tiger</value>
 		</property>
 	</bean>
+	<!--==================[[ Spring TransactionManager ]]=================-->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">		
+		<property name="dataSource" ref="data-source-target" />
+	</bean>
 	<!--==================[[ Spring & MyBatis ]]=================-->
 	<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 		<property name="configLocation" value="WEB-INF/mybatis-config.xml" />
@@ -24,7 +28,16 @@
 	<bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSessionFactory" />
 	</bean>
+	<bean id="board-dao" class="com.spring4.mvc.BoardDao">
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />	
+	</bean>
 	<bean id="auth-dao" class="com.spring4.mvc.AuthDao">
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
+	</bean>
+	<bean id="emp-dao" class="com.spring4.tr.EmpDao">
+		<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
+	</bean>
+	<bean id="dept-dao" class="com.spring4.tr.DeptDao">
 		<property name="sqlSessionTemplate" ref="sqlSessionTemplate" />
 	</bean>
 </beans>

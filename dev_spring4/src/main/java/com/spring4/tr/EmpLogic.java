@@ -5,6 +5,8 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 import org.springframework.dao.DataAccessException;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 public class EmpLogic {
 	Logger logger = Logger.getLogger(EmpLogic.class);
@@ -16,11 +18,9 @@ public class EmpLogic {
 	public void setEmpDao(EmpDao empDao) {
 		this.empDao = empDao;
 	}
-	
-	//@Transactional(propagation = propagation.REQUIRES_NEW, rollbackFor= {DataAccessExxception.class})
-//	public int doEmp() {// 한번에 커밋하시오..
-//	public int goEmp() {// 건건이 커밋해라...
-	public int cudEmp() {// 건건이 커밋해라...
+	//@Transactional(propagation=Propagation.REQUIRES_NEW, rollbackFor= {DataAccessException.class})
+	//public int doEmp() {//한번에 커밋하시오.
+	public int cudEmp() {//건건이 커밋해라..
 		logger.info("doEmp 호출");
 		Map<String,Object> emap = new HashMap<>();
 		emap.put("empno", 9005);
@@ -28,7 +28,7 @@ public class EmpLogic {
 		emap.put("deptno", 89);
 		try {
 			Map<String,Object> dmap = new HashMap<>();
-			dmap.put("deptno", 89);
+			dmap.put("deptno",89);
 			dmap.put("dname", "개발부");
 			dmap.put("loc", "부산");
 			deptDao.deptInsert(dmap);
