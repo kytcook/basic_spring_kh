@@ -44,7 +44,7 @@ public class BoardController extends MultiActionController {
 //		model.addAttribute("boardList", boardList);// scope:request
 		req.setAttribute("boardList", boardList);
 		logger.info(boardList);
-		return "foward:boardList.jsp";
+		return "forward:boardList.jsp";
 	}
 
 	public String boardDetail(HttpServletRequest req, HttpServletResponse res) {
@@ -56,14 +56,15 @@ public class BoardController extends MultiActionController {
 		boardLogic.boardDetail(pMap);
 		boardList = boardLogic.boardDetail(pMap);
 		req.setAttribute("boardList", boardList);
-		return "foward:read.jsp";
+		return "forward:read.jsp";
 	}
 
 	public String boardInsert(HttpServletRequest req, HttpServletResponse res) {
 		Map<String,Object> pMap = new HashMap<>();
 		logger.info("boardInsert호출 성공 : "+pMap);
 		HashMapBinder hmb = new HashMapBinder(req);
-		hmb.bind(pMap);
+//		hmb.bind(pMap); //얘는 첨부파일이 없을 때.
+		hmb.multiBind(pMap);
 		boardLogic.boardInsert(pMap);
 		// redirect-forward, forward -> forward(에러)
 		return "redirect:boardList.sp";
@@ -72,6 +73,8 @@ public class BoardController extends MultiActionController {
 	public String boardUpdate(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("boardUpdate호출 성공");
 		Map<String,Object> pMap = new HashMap<>();
+		HashMapBinder hmb = new HashMapBinder(req);
+		hmb.bind(pMap);
 		boardLogic.boardUpdate(pMap);
 		// redirect-forward, forward -> forward(에러)
 		return "redirect:boardList.sp";
@@ -80,6 +83,8 @@ public class BoardController extends MultiActionController {
 	public String boardDelete(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("boardDelete호출 성공");
 		Map<String,Object> pMap = new HashMap<>();
+		HashMapBinder hmb = new HashMapBinder(req);
+		hmb.bind(pMap);
 		boardLogic.boardDelete(pMap);
 		// redirect-forward, forward -> forward(에러)
 		return "redirect:boardList.sp";

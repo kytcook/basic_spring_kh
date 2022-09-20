@@ -31,11 +31,11 @@ public class HashMapBinder {
 	public HashMapBinder() {}
 	public HashMapBinder(HttpServletRequest req) {
 		this.req = req;
-		realFolder = "D:\\java_study\\workspace_java\\kh_javaAC\\taek_web\\src\\main\\webapp\\pds";
+		realFolder = "D:\\java_study\\workspace_spring\\taek_spring4\\src\\main\\webapp\\pds";
 	}
 	public void multiBind(Map<String,Object> pMap) {
 		pMap.clear();
-		try {
+		try {//DefaultFileRenamePolicy() 일종의 관찰자 역할 : 같은이름이 존재하면 내부적으로 자동번호매김?
 			multi = new MultipartRequest(req, realFolder, maxSize, encType, new DefaultFileRenamePolicy());
 		} catch (Exception e) {
 			logger.info("Exception: "+e.toString());
