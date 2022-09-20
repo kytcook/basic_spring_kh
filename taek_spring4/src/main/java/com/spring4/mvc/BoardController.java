@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import com.google.gson.Gson;
+import com.util.HashMapBinder;
 
 // 여기선 어노테이션 사용하지 않는다.
 //req, res를 주입받기 위해서는 MultiActionController를 사용한다.
@@ -43,19 +44,26 @@ public class BoardController extends MultiActionController {
 //		model.addAttribute("boardList", boardList);// scope:request
 		req.setAttribute("boardList", boardList);
 		logger.info(boardList);
-		return "foward:list.jsp";
+		return "foward:boardList.jsp";
 	}
 
 	public String boardDetail(HttpServletRequest req, HttpServletResponse res) {
 		logger.info("boardDetail호출 성공");
 		Map<String,Object> pMap = new HashMap<>();
+		HashMapBinder hmb = new HashMapBinder(req);
+		hmb.bind(pMap);
+		List<Map<String,Object>> boardList = null;
 		boardLogic.boardDetail(pMap);
+		boardList = boardLogic.boardDetail(pMap);
+		req.setAttribute("boardList", boardList);
 		return "foward:read.jsp";
 	}
 
 	public String boardInsert(HttpServletRequest req, HttpServletResponse res) {
-		logger.info("boardInsert호출 성공");
 		Map<String,Object> pMap = new HashMap<>();
+		logger.info("boardInsert호출 성공 : "+pMap);
+		HashMapBinder hmb = new HashMapBinder(req);
+		hmb.bind(pMap);
 		boardLogic.boardInsert(pMap);
 		// redirect-forward, forward -> forward(에러)
 		return "redirect:boardList.sp";
