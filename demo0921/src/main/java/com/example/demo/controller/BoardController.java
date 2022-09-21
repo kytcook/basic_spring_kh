@@ -24,6 +24,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.example.demo.logic.BoardLogic;
 import com.google.gson.Gson;
 import com.util.HangulConversion;
+import com.util.HashMapBinder;
 
 @Controller
 @RequestMapping("/board/*")
@@ -100,15 +101,6 @@ public class BoardController {
 		model.addAttribute("boardList", boardList);
 		return "forward:boardList.jsp";
 	}
-
-	@GetMapping("boardInsert.sp4")
-	public Object boardInsert(@RequestParam Map<String, Object> pMap, @RequestParam(value="b_file", required=false) MultipartFile b_file) {
-		logger.info("boardInsert 호출 성공 : " + pMap);
-		int result = 0;
-		result = boardLogic.boardInsert(pMap);
-		return "redirect:boardList.sp4";
-	}
-	
 //	@GetMapping("boardInsert.sp4")
 	@PostMapping("boardInsert.sp4") 
 	public String boardInsert(MultipartHttpServletRequest mpRequest, @RequestParam(value="b_file", required=false) MultipartFile b_file) {

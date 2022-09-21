@@ -4,7 +4,7 @@
 <%
 	List<DeptVO> deptList = (List<DeptVO>)request.getAttribute("deptList");
 	out.print(deptList);
-%>
+%>    
 <!DOCTYPE html>
 <html>
 <head>

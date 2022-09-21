@@ -8,9 +8,9 @@
 	{key:[{DeptVO}.{DeptVO},{DeptVO}]}
 	 -->
 	<select id="deptList" parameterType="map" resultType="map" statementType="CALLABLE">
-		{CALL proc_deptlist(#{deptno, mode=IN},#{key, jdbcType=CURSOR, mode=OUT, javaType=java.sql.ResultSet, resultMap=deptMap})}
+		{CALL proc_deptlist(#{deptno, mode=IN},#{key, jdbcType=CURSOR, mode=OUT, javaType=java.sql.ResultSet, resultMap=map})}
 	</select>
-	<insert id="deptInsert" parameterType="map">
-		INSERT INTO dept(deptno,dname,loc) values(#{deptno},#{dname},#{loc})
-	</insert>
+    <insert id="deptInsert" parameterType="map">
+		INSERT INTO dept(deptno,dname,loc) VALUES(#{deptno},#{dname},#{loc})    
+    </insert>
 </mapper>
