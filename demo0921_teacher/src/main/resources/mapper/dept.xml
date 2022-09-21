@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mybatis.mapper.deptMapper">
+	<resultMap type="com.example.demo.vo.DeptVO" id="deptMap"></resultMap>
+	<!-- 
+	{key:[{DeptVO},{DeptVO},{DeptVO}]}
+	 -->
+	<select id="deptList" parameterType="map" resultType="map" statementType="CALLABLE">
+		{CALL proc_deptlist(#{deptno, mode=IN},#{key, jdbcType=CURSOR, mode=OUT, javaType=java.sql.ResultSet, resultMap=map})}
+	</select>
+    <insert id="deptInsert" parameterType="map">
+		INSERT INTO dept(deptno,dname,loc) VALUES(#{deptno},#{dname},#{loc})    
+    </insert>
+</mapper>
