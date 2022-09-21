@@ -24,13 +24,14 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok'
 	developmentOnly 'org.springframework.boot:spring-boot-devtools'
 	annotationProcessor 'org.projectlombok:lombok'
-	//providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.apache.tomcat.embed:tomcat-embed-jasper:10.0.23'
 	implementation 'javax.servlet:jstl'
 	implementation 'com.zaxxer:HikariCP:3.4.5'
 	implementation 'org.mybatis.spring.boot:mybatis-spring-boot-starter:2.2.2'
 	implementation 'com.google.code.gson:gson:2.8.9'
+	
 }
 
 tasks.named('test') {
