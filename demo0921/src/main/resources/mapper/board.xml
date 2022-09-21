@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mybatis.mapper.boardMapper">
+	<resultMap type="com.example.demo.vo.BoardMasterVO" id="bmMap"></resultMap>
+	<resultMap type="com.example.demo.vo.BoardSubVO" id="bsMap"></resultMap>
+	<select id="boardList" parameterType="map" resultType="map" statementType="CALLABLE">
+		{CALL proc_boardlist(#{key, jdbcType=CURSOR, mode=OUT, javaType=java.sql.ResultSet, resultMap=deptMap})}
+	</select>
+</mapper>
