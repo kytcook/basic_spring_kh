@@ -30,7 +30,7 @@ public class DeptController {
 		pMap.put("deptno", 20);
 		deptList = deptLogic.deptList(pMap);
 		model.addAttribute("deptList", deptList);
-	//	return "dept/deptList";
+//		return "dept/deptList";
 		return "forward:deptList.jsp";
 	}
 	

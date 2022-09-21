@@ -17,9 +17,15 @@ public class DeptDao {
 	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate = null;
 	public List<DeptVO> deptList(Map<String, Object> pMap) {
+		logger.info(pMap.get("deptno"));
 		List<DeptVO> deptList = null;
 		sqlSessionTemplate.selectOne("deptList", pMap);
 		logger.info("pMap : "+pMap);
+		deptList = (List<DeptVO>)pMap.get("key");
+		for(int i=0; i<deptList.size();i++) {
+			DeptVO dvo = deptList.get(i);
+			logger.info(dvo.getDeptno());
+		}
 		return deptList;
 	}
 }
