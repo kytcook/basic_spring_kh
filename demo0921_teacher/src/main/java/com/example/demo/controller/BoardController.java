@@ -36,12 +36,12 @@ public class BoardController {
 	private BoardLogic boardLogic = null;
 	private final String filePath = "D:\\workspace_spring\\basic\\src\\main\\webapp\\pds\\"; // 파일이 저장될 위치
 	@ResponseBody
-	@GetMapping(value="helloworld.sp4", produces="text/plain;charset=UTF-8")
+	@GetMapping(value="helloworld", produces="text/plain;charset=UTF-8")
 	public String helloWorld() {
 	    return "한글처리";
 	}
 	@ResponseBody
-	@GetMapping(value="jsonFormat.sp4", produces="application/json;charset=UTF-8")
+	@GetMapping(value="jsonFormat", produces="application/json;charset=UTF-8")
 	public String jsonFormat() {
 		List<Map<String,Object>> names = new ArrayList<>();
 		Map<String,Object> rmap = new HashMap<>();
@@ -57,7 +57,7 @@ public class BoardController {
 		return temp;
 	}
 	//사이드 관전포인트 - 파라미터에 req, res가 없다
-	@GetMapping("testParam.sp4")
+	@GetMapping("testParam")
 	public String testParam(@RequestParam String mem_id) {
 		logger.info("testParam 호출 성공"+mem_id);
 		return "redirect:/test/testList.jsp";
@@ -69,23 +69,23 @@ public class BoardController {
 	 * ModelAndView도 필요없음 - Model
 	 * 리턴타입 : ModelAndView -> String
 	 */
-	@GetMapping("boardDelete.sp4")
+	@GetMapping("boardDelete")
 	public Object boardDelete(@RequestParam Map<String,Object> pMap) {
 		logger.info("boardDelete 호출 성공");
 		int result = 0;
 		result = boardLogic.boardDelete(pMap);
-		return "redirect:boardList.sp4";
+		return "redirect:boardList";
 	}
-	@GetMapping("boardUpdate.sp4")
+	@GetMapping("boardUpdate")
 	public Object boardUpdate(@RequestParam Map<String,Object> pMap) {
 		logger.info("boardUpdate 호출 성공");
 		int result = 0;
 		result = boardLogic.boardUpdate(pMap);
 		// jsp-> action(update) -> action(select) --(forward)--> boardList.jsp
-		String path = "redirect:boardList.sp4";
+		String path = "redirect:boardList";
 		return path;
 	}
-	@GetMapping("boardDetail.sp4")
+	@GetMapping("boardDetail")
 	public String boardDetail(Model model, @RequestParam Map<String,Object> pMap) {
 		logger.info("boardDetail 호출 성공");
 		List<Map<String,Object>> boardList = null;
@@ -95,26 +95,28 @@ public class BoardController {
 	}	
 	@GetMapping("boardList")
 	public String boardList(Model model, @RequestParam Map<String,Object> pMap) {
-		logger.info("boardList 호출 성공");
+		logger.info("boardList 호출 성공--> "+pMap);//cb_search:b_title컬럼 b_writer b_content , tb_search:title
 		List<Map<String,Object>> boardList = null;
 		//여기 여기....필요할 때 인스턴스화 해서 호출한다 - 게으른 인스턴스화 - 스프링 위치
 		//boardLogic = new Board3Logic();//주소번지 다르다
 		boardList = boardLogic.boardList(pMap);
 		model.addAttribute("boardList",boardList);
-		return "forward:boardList.jsp";
+//		return "forward:boardList.jsp";//webapp/board/
+		//pojo 1-3 ModelAndView경우와 동일
+		return "board/boardList";//WEB-INF/views/board/
 	}	
-	//@GetMapping("boardInsert.sp4")
-	@PostMapping("boardInsert.sp4")
+	//@GetMapping("boardInsert")
+	@PostMapping("boardInsert")
 	public String boardInsert(MultipartHttpServletRequest mpRequest, @RequestParam(value="bs_file", required=false) MultipartFile bs_file) {
-		logger.info("boardInsert 호출 성공");
 		int result = 0;
 		Map<String,Object> pMap = new HashMap<>();
 		HashMapBinder hmb = new HashMapBinder(mpRequest);
 		hmb.mbind(pMap);
+		logger.info("boardInsert 호출 성공 ==> "+pMap);
 		if(!bs_file.isEmpty()) {//
-			String filename = HangulConversion.toUTF(bs_file.getOriginalFilename());
+			String filename = bs_file.getOriginalFilename();
 			logger.info("한글 처리 테스트 : "+filename);
-			String savePath = "D:\\workspace_spring\\basic\\src\\main\\webapp\\pds";
+			String savePath = "D:\\workspace_spring\\demo0921\\src\\main\\webapp\\pds";
 			//파일에 대한 풀 네임 담기
 			String fullPath = savePath+"\\"+filename;			
 			try {
@@ -139,6 +141,6 @@ public class BoardController {
 			}
 		}
 		result = boardLogic.boardInsert(pMap);
-		return "redirect:boardList.sp4";
+		return "redirect:boardList";
 	}	
 }

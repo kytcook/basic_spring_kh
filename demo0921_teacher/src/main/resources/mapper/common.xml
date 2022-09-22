@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mybatis.mapper.commonMapper">
+	<resultMap type="java.util.Map" id="zipMap"></resultMap>
+	<select id="proc_zipcode" parameterType="map" resultType="map" statementType="CALLABLE">
+		{CALL proc_zipcode(#{dong, mode=IN, jdbcType=VARCHAR}
+		                    ,#{key, jdbcType=CURSOR, mode=OUT, javaType=java.sql.ResultSet, resultMap=zipMap})}
+	</select>	
+</mapper>

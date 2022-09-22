@@ -31,6 +31,7 @@ public class BoardLogic {
 		logger.info("boardList 호출 성공");
 		List<Map<String,Object>> boardList = null;
 		boardList = boardDao.boardList(pMap);
+		//boardList = boardDao.pro_boardlist(pMap);
 		return boardList;
 	}
 	// 하나의 메소드 안에서 DAO의 여러 메소드를 호출할 수 있음 - 트랜잭션처리 공통된 관심사를 갖는 부분
@@ -64,6 +65,7 @@ public class BoardLogic {
 			pMap.put("b_step", 0);
 		}
 		result = boardDao.boardMInsert(pMap);// 새글쓰기, 댓글쓰기 동시
+		//result = boardDao.pro_boardinsert(pMap);// 새글쓰기, 댓글쓰기 동시
 		//첨부파일이 있는 경우에만 board_sub_t 추가함
 		//첨부 파일이 있니?
 		if(pMap.get("bs_file")!=null && pMap.get("bs_file").toString().length()>1) {

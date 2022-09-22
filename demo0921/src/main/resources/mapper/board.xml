@@ -28,16 +28,17 @@
 		프로시저 사용이 불가한 경우임. 주의하자.
 		그러나 myBatis에서는 쿼리문안에서 if문을 사용할 수 있으니까 가능하였다.
    -->
-   <select id="proc_boardList" parameterType="map" resultType="map" statementType="CALLABLE">
+   <select id="proc_boardlist" parameterType="map" resultType="map" statementType="CALLABLE">
       {CALL proc_boardlist(#{cb_search, mode=IN, jdbcType=VARCHAR}
       					  ,#{tb_search, mode=IN, jdbcType=VARCHAR}
       					  ,#{key, jdbcType=CURSOR, mode=OUT, javaType=java.sql.ResultSet, resultMap=boardMap})}
    </select>
    
-   <insert id="boardSInsert" parameterType="map">
-      INSERT INTO board_sub_t(b_no, bs_seq, b_file, bs_size)
-      VALUES(#{b_no}, #{bs_seq},#{b_file}, #{bs_size})        
-   </insert>
+   	<select id="proc_boardinsert" parameterType="map" resultType="map" statementType="CALLABLE">
+		{CALL proc_boardinsert(#{b_no mode=IN},#{b_title mode=IN},#{b_writer mode=IN},#{b_content mode=IN}
+		,#{b_pw mode=IN},#{b_group mode=IN},#{b_pos mode=IN},#{b_step mode=IN}
+		,#{result, jdbcType=NUMERIC, mode=OUT, javaType=int})}
+	</select>
    
    <update id="hitCount" parameterType="map">
       UPDATE board_master_t

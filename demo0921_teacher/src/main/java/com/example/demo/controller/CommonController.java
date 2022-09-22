@@ -15,14 +15,14 @@ import com.google.gson.Gson;
 
 @RestController
 public class CommonController {
-	Logger logger = LogManager.getLogger();
+	Logger logger = LogManager.getLogger(CommonController.class);
 	@Autowired(required=true)
 	private CommonLogic commonLogic = null;
 	@GetMapping("/zipcode/zipcodeList")
 	public String zipcodeList(@RequestParam String dong) {
-		logger.info("zipcodeList호출 성공  input ==> "+dong);
+		logger.info("zipcodeList호출 성공: input ==> "+dong);
 		List<Map<String,Object>> zipList = null;
-		zipList = commonLogic.zipcodeLisy(dong);
+		zipList = commonLogic.zipcodeList(dong);
 		Gson g = new Gson();
 		String imsi = g.toJson(zipList);
 		return imsi;
