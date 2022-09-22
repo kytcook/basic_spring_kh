@@ -112,7 +112,7 @@ public class BoardController {
 		hmb.mbind(pMap);
 		logger.info("boardInsert 호출 성공 ==> "+pMap);
 		if(!b_file.isEmpty())  {
-			String filename = HangulConversion.toUTF(b_file.getOriginalFilename());
+			String filename = b_file.getOriginalFilename();
 			logger.info("한글 처리 테스트 : "+filename);
 			String savePath = "D:\\java_study\\workspace_spring\\demo0921\\src\\main\\webapp\\pds";
 			// 파일에 대한 풀 네임 담기

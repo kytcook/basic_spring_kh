@@ -64,7 +64,8 @@ public class BoardLogic {
 			pMap.put("b_pos", 0);
 			pMap.put("b_step", 0);
 		}
-		result = boardDao.boardMInsert(pMap);   // 새글쓰기와 댓글쓰기 동시
+//		result = boardDao.boardMInsert(pMap);   // 새글쓰기와 댓글쓰기 동시
+		result = boardDao.proc_boardinsert(pMap);   // 새글쓰기와 댓글쓰기 동시
 		// 첨부파일이 있는 경우에만 board_sub_t 추가함
 		// 첨부파일이 있니?
 		if(pMap.get("b_file")!=null && pMap.get("b_file").toString().length()>1) {
