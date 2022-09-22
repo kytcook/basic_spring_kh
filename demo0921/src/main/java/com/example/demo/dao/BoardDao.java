@@ -16,11 +16,11 @@ public class BoardDao {
 	@Autowired(required = false)
 	private SqlSessionTemplate sqlSessionTemplate = null;
 
-	public int proc_boardinsert(Map<String, Object> pMap) {
+	public int pro_boardinsert(Map<String, Object> pMap) {
 		logger.info("boardList 호출 성공 ==> "+pMap);
 		int result = 0;
 		try {
-			sqlSessionTemplate.selectOne("proc_boardinsert", pMap);
+			sqlSessionTemplate.selectOne("pro_boardinsert", pMap);
 			if(pMap.get("result")!=null) {
 				result = Integer.parseInt(pMap.get("result").toString());
 			}
@@ -36,8 +36,8 @@ public class BoardDao {
 		logger.info("boardList 호출 성공");
 		List<Map<String, Object>> boardList = null;
 		try {
-			sqlSessionTemplate.selectOne("pro_boardlist", pMap);
-			boardList = sqlSessionTemplate.selectList("boardList", pMap);
+			sqlSessionTemplate.selectOne("proc_boardlist", pMap);
+			boardList = (List<Map<String, Object>>)pMap.get("key");
 			// insert here
 			logger.info(boardList.toString());
 		} catch (DataAccessException e) {

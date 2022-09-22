@@ -21,11 +21,20 @@
    <!-- 
    {key:[{DeptVO},{DeptVO},{DeptVO}]}
     -->
+   <!--
+		콤버에서 선택한 값에 따라서 컬럼명을 변수처리 해야하는데 프로시저에서 SELECT문 안에 컬럼자리를 변수로 치환 불가함
+		컬럼명이 고정된 경우에는 프로시저 사용이 가능하지만
+		아래 경우처럼 제목, 내용, 작성자 등으로 선택조건이 달라지면 조건절에 컬럼명이 동적으로 바뀌어야 하므로
+		프로시저 사용이 불가한 경우임. 주의하자.
+		그러나 myBatis에서는 쿼리문안에서 if문을 사용할 수 있으니까 가능하였다.
+   -->
    <select id="proc_boardList" parameterType="map" resultType="map" statementType="CALLABLE">
-      {CALL proc_boardlist(#{key, jdbcType=CURSOR, mode=OUT, javaType=java.sql.ResultSet, resultMap=bmMap})}
+      {CALL proc_boardlist(#{cb_search, mode=IN, jdbcType=VARCHAR}
+      					  ,#{tb_search, mode=IN, jdbcType=VARCHAR}
+      					  ,#{key, jdbcType=CURSOR, mode=OUT, javaType=java.sql.ResultSet, resultMap=boardMap})}
    </select>
    
-      <insert id="boardSInsert" parameterType="map">
+   <insert id="boardSInsert" parameterType="map">
       INSERT INTO board_sub_t(b_no, bs_seq, b_file, bs_size)
       VALUES(#{b_no}, #{bs_seq},#{b_file}, #{bs_size})        
    </insert>

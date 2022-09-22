@@ -36,7 +36,7 @@
 // javascript만으로 처리
 // html_javascript혼합 처리(권장->리액트랑 연관)
 	function boardList(){
-		location.href="./boardList.sp4";
+		location.href="./boardList";
 	}
 	function dlgIns_save(){
 		$("#f_boardIns").submit();
@@ -69,7 +69,7 @@
 		if(u_pw == db_pw){
 			$.messager.confirm('Confirm','정말 삭제할거야?', function(r){
 				if(r){
-					location.href="./boardDelete.sp4?b_no="+<%=rb_no%>;
+					location.href="./boardDelete?b_no="+<%=rb_no%>;
 				}
 			});
 		}else{
@@ -123,7 +123,7 @@
 		<!-- 바이너리(문자열 + 숫자) 파일을 전송할 떄는 반드시 post방식 처리(첨부파일 처리시) -->
 		<!-- base2, base8, base16, base64 텍스트 파일(문자열 치환 - 파일크기가 커진다) -->
 		<!-- <form id="f_boardIns" method="post" enctype="multipart/form-data" action="./boardInsert.do"> -->
-        <form id="f_boardUpd" method="get" action="./boardUpdate.sp4">
+        <form id="f_boardUpd" method="get" action="./boardUpdate">
         <!-- 태그안에 자바변수 사용가능한가? 가능하다. -->
 	    <input type="hidden" id="b_no" name="b_no" value="<%=rb_no%>">
         	<table>
@@ -158,7 +158,7 @@
 		<!-- 바이너리(문자열 + 숫자) 파일을 전송할 떄는 반드시 post방식 처리(첨부파일 처리시) -->
 		<!-- base2, base8, base16, base64 텍스트 파일(문자열 치환 - 파일크기가 커진다) -->
 		<!-- <form id="f_boardIns" method="post" enctype="multipart/form-data" action="./boardInsert.do"> -->
-        <form id="f_boardIns" method="get" action="./boardInsert.sp4">
+        <form id="f_boardIns" method="get" action="./boardInsert">
         <!-- 태그안에 자바변수 사용가능한가? 가능하다. -->
 	    <input type="hidden" id="b_group" name="b_group" value="<%=rb_group%>">
 	    <input type="hidden" id="b_pos" name="b_pos" value="<%=rb_pos%>">

@@ -93,7 +93,7 @@ public class BoardController {
 	}
 	@GetMapping("boardList")
 	public String boardList(Model model, @RequestParam Map<String, Object> pMap) {
-		logger.info("boardList 호출 성공");
+		logger.info("boardList 호출 성공 -->" + pMap);//cb_search:b_title컬럼 b_writer b_content, tb_search:title
 		List<Map<String, Object>> boardList = null;
 		// 여기여기....필요할 때 인스턴스화 해서 -> 게으른 인스턴스화 - 스프링에서 대단히 중요한 위치의 문제.
 //		boardLogic = new Board3Logic(); // 전변인데 주소번지는 다르다..
