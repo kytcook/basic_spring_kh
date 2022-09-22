@@ -16,6 +16,20 @@ public class BoardDao {
 	@Autowired(required = false)
 	private SqlSessionTemplate sqlSessionTemplate = null;
 
+	public List<Map<String, Object>> pro_boardlist(Map<String, Object> pMap) {
+		logger.info("boardList 호출 성공");
+		List<Map<String, Object>> boardList = null;
+		try {
+			sqlSessionTemplate.selectOne("pro_boardlist", pMap);
+			boardList = sqlSessionTemplate.selectList("boardList", pMap);
+			// insert here
+			logger.info(boardList.toString());
+		} catch (DataAccessException e) {
+			logger.info("Exception : " + e.toString());
+		}
+		return boardList;
+	}
+	
 	public List<Map<String, Object>> boardList(Map<String, Object> pMap) {
 		logger.info("boardList 호출 성공");
 		List<Map<String, Object>> boardList = null;
