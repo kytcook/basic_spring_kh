@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mybatis.mapper.memberMapper">
+	<resultMap type="java.util.Map" id="memberMap"></resultMap>
+	<select id="proc_memberinsert" parameterType="map" resultType="map" statementType="CALLABLE">
+		{CALL proc_memberinsert(#{mem_id, mode=IN},#{mem_pw, mode=IN},#{mem_name, mode=IN},#{mem_zipcode, mode=IN}
+		,#{mem_address, mode=IN},#{result, jdbcType=NUMERIC, mode=OUT, javaType=int})}
+	</select>
+</mapper>

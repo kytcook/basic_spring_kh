@@ -93,6 +93,9 @@ public class BoardController {
 		model.addAttribute("boardList",boardList);
 		return "forward:read.jsp";
 	}	
+	//메소드의 파라미터로 객체주입이 되고 있다. - 의존성 주입관계에 있다.
+	//스프링에서 제공[인스턴스화를 대신해주고 그 시점도 관리해줌- 라이프사이클 관리]하는 클래스 이다.
+	//이런걸 해주니까 개발자는 로직에만 집중할 수 있다. -인스턴스화를 안해도 되고 , 자원반납을 안해도 안전하고
 	@GetMapping("boardList")
 	public String boardList(Model model, @RequestParam Map<String,Object> pMap) {
 		logger.info("boardList 호출 성공--> "+pMap);//cb_search:b_title컬럼 b_writer b_content , tb_search:title

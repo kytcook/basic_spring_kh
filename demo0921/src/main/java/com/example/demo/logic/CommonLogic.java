@@ -15,7 +15,7 @@ public class CommonLogic {
 	Logger logger = LogManager.getLogger(CommonLogic.class);
 	@Autowired
 	private CommonDao commonDao = null;
-	public List<Map<String, Object>> zipcodeLisy(String dong) {
+	public List<Map<String, Object>> zipcodeList(String dong) {
 		List<Map<String,Object>> zipList = null;
 		zipList = commonDao.zipcodeList(dong);
 		return zipList;

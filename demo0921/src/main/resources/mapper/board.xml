@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.mybatis.mapper.board Mapper">
+<mapper namespace="com.mybatis.mapper.boardMapper">
    <resultMap type="java.util.Map" id="boardMap"/>
    <resultMap id="bmMap" type="com.example.demo.vo.BoardMasterVO">
       <id property="b_no" column="b_no"/>
@@ -30,7 +30,7 @@
    -->
    <select id="proc_boardlist" parameterType="map" resultType="map" statementType="CALLABLE">
       {CALL proc_boardlist(#{cb_search, mode=IN, jdbcType=VARCHAR}
-      					  ,#{tb_search, mode=IN, jdbcType=VARCHAR}
+						  ,#{tb_search, mode=IN, jdbcType=VARCHAR}
       					  ,#{key, jdbcType=CURSOR, mode=OUT, javaType=java.sql.ResultSet, resultMap=boardMap})}
    </select>
    
@@ -86,8 +86,9 @@
         FROM dual   
    </select>
    <select id="boardList" parameterType="java.util.Map" resultType="map">
-      SELECT bm.b_no, bm.b_title, bm.b_writer, bs.b_file, bm.b_hit, bm.b_content
-         , bm.b_date, bm.b_group, bm.b_pos, bm.b_step, bm.b_pw, NVL(bs.bs_size,0)
+      SELECT bm.b_no, bm.b_title, bm.b_writer, bs.b_file, bm.b_hit
+    		,bm.b_content, bm.b_date, bm.b_group, bm.b_pos, bm.b_step
+     		,bm.b_pw, bs.b_file, NVL(bs.bs_size,0) bs_size
         FROM board_master_t bm LEFT OUTER JOIN board_sub_t bs
           ON bm.b_no = bs.b_no
       <where>
