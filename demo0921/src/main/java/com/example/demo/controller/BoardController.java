@@ -85,7 +85,7 @@ public class BoardController {
 	}	
 	@GetMapping("boardDetail")
 	public String boardDetail(Model model, @RequestParam Map<String, Object> pMap) {
-		logger.info("boardList 호출 성공");
+		logger.info("boardDetail 호출 성공");
 		List<Map<String, Object>> boardList = null;
 		boardList = boardLogic.boardDetail(pMap);
 		model.addAttribute("boardList", boardList);
@@ -102,8 +102,8 @@ public class BoardController {
 //		boardLogic = new Board3Logic(); // 전변인데 주소번지는 다르다..
 		boardList = boardLogic.boardList(pMap);
 		model.addAttribute("boardList", boardList);
-		// pojo 1-3 ModelAndView경우와 동일하다.
 //		return "forward:boardList.jsp"; // webapp/board/
+		// pojo 1-3 ModelAndView경우와 동일하다.
 		return "board/boardList"; // WEB-INF/views/board/
 	}
 //	@GetMapping("boardInsert")
@@ -136,7 +136,7 @@ public class BoardController {
 				logger.info("size:"+d_size);
 				pMap.put("b_file", filename); 
 				pMap.put("bs_size", d_size);
-				logger.info("파일정보:"+pMap.get("b _file")+", "+pMap.get("b_size"));
+				logger.info("파일정보:"+pMap.get("b_file")+", "+pMap.get("b_size"));
 			} catch (Exception e) {
 				e.printStackTrace();
 						

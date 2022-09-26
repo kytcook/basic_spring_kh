@@ -2,8 +2,29 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mybatis.mapper.memberMapper">
 	<resultMap type="java.util.Map" id="memberMap"></resultMap>
+	<select id="login" parameterType="map" resultType="com.example.demo.vo.MemberVO">
+		SELECT mem_id, mem_name FROM member
+		 WHERE mem_id = #{mem_id}
+		   AND mem_pw = #{mem_pw} 
+	</select>
 	<select id="proc_memberinsert" parameterType="map" resultType="map" statementType="CALLABLE">
 		{CALL proc_memberinsert(#{mem_id, mode=IN},#{mem_pw, mode=IN},#{mem_name, mode=IN},#{mem_zipcode, mode=IN}
 		,#{mem_address, mode=IN},#{result, jdbcType=NUMERIC, mode=OUT, javaType=int})}
+	</select>
+	<select id="memberList" parameterType="map" resultType="map">
+		SELECT
+		       mem_no, mem_id, mem_pw, mem_name, mem_zipcode, mem_address
+		       ,
+		       <![CDATA[ '<a href="javascript:memoForm()">쪽지쓰기</a>' ]]> as button
+		  FROM member	
+		<trim prefix="where">
+			<if test='type!=null and type.equals("mem_id")'>
+				mem_id LIKE '%'||#{keyword}||'%'
+			</if>
+			<if test='type!=null and type.equals("mem_name")'>
+			    mem_name LIKE '%'||#{keyword}||'%'
+			</if>
+		</trim>	  
+		  
 	</select>
 </mapper>

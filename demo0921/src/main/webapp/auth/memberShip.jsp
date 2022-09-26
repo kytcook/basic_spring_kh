@@ -11,6 +11,8 @@
 		console.log(zipcode);
 		$("#_easyui_textbox_input4").val(zipcode);
 		$("#_easyui_textbox_input5").val(address);
+		$("input[name=mem_zipcode]").val(zipcode);
+		$("input[name=mem_address]").val(address);
 		$("#dlg_zipcode").dialog('close');
 	}
 	function zipcodeSearch(){
@@ -56,11 +58,11 @@
 		<input id="mem_name" name="mem_name" class="easyui-textbox" style="width:100px"/>
 		<br>
 		<label for="mem_zipcode">우편번호</label>
-		<input id="mem_zipcode" name="mem_zipcode" style="width:100px"/>
+		<input id="mem_zipcode" name="mem_zipcode" class="easyui-textbox" style="width:100px"/>
 		<a href="javascript:searchForm()" class="easyui-linkbutton">우편번호찾기</a>
 		<br>
 		<label for="mem_address">주 소</label>
-		<input id="mem_address" name="mem_address" style="width:250px"/>		
+		<input id="mem_address" name="mem_address" class="easyui-textbox" style="width:250px"/>		
 		<br>
 		</form>
 		<a href="javascript:memberShip()" class="easyui-linkbutton">가입</a>		

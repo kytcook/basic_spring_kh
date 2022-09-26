@@ -8,6 +8,16 @@
 <%@ include file="../common/easyui_common.jsp" %>
 </head>
 <body>
+<script type="text/javascript">
+	$(document).ready(function(){
+		var t = $('#dong');
+		t.textbox('textbox').bind('keydown', function(e){
+			if (e.keyCode == 13){	// when press ENTER key, accept the inputed value.
+				zipcodeSearch();
+			}
+		});		
+	})
+</script>
 	<div>
 		<label for="dong">동이름 입력</label>
 		<input id="dong" name="dong" class="easyui-textbox" style="width:300px"/>
