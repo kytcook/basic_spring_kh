@@ -47,7 +47,7 @@
 		// 순서지향적인, 절차지향적인 코딩 -> 모듈화 -> 비동기처럼 처리 하기(연습-await, async)
 		function memberList(){
 			//alert("회원목록 호출 성공");
-			alert($("#_easyui_textbox_input4").val());
+			//alert($("#_easyui_textbox_input4").val());
 			let type = null;
 			let keyword = null;
 			if($("#_easyui_textbox_input4").val()!=null && $("#_easyui_textbox_input4").val().length>0) {
@@ -65,12 +65,14 @@
 			// url속성에 xxx.jsp가 오면 포준 서블릿인 HttpServlet이 관여하는 것이고
 			// XXX.pj로 요청하면 ActionSupport가 관여하는 것이다.
 			$("#dg_member").datagrid({
+				//오라클서버에서 요청한 결과를 myBatis를 사용하면 자동으로 컬럼명이 대문자
+				//단 List<XXVO>형태라면 그땐 소문자가 맞다				
 				method:"get"
 				,url:"/member/jsonMemberList?type="+type+"&keyword="+keyword // 응답페이지는 JSON포맷의 파일이어야 함. (html이 아니라)
 				,onSelect: function(index, row){
 					to_id = row.Mem_ID;// 데이터그리드 선택시해당 로우의 아이디 담기
 					to_name = row.MEM_NAME;// 데이터그리드 선택시 해당 로우의 이름 담기
-					consol.log(to_id+ " , " +to_name);
+					console.log(to_id+ " , " +to_name);
 				}
 				,onDblClickCell: function(index,field,value){
 					//console.log(index+", "+field+", "+value);
@@ -85,12 +87,12 @@
 		}
 		
 		function memberInsert(){
-			alert("회원등록 호출 성공");
+			//alert("회원등록 호출 성공");
 			$("#d_member").hide();
 			$("#d_memberInsert").show();
 		}
 		
-		function memForm(){
+		function memoForm(){
 			console.log("memoForm 호출");
 			$("#dlg_memo").dialog({
 				title: "쪽지쓰기",
@@ -216,7 +218,10 @@
               <span>게시판</span>
               <ul>
 	               <li>
-	 		       		<span>1:1채팅관리</span>
+	 		       		<span>1:1</span>
+	               </li>
+	               <li>
+	 		       		<span>공지사항</span>
 	               </li>
 	               <li>
 	                 	<span>QnA</span>
@@ -233,7 +238,7 @@
         
         <!-- [[ 회원관리{회원목록, 회원등록, 회원삭제]] -->
         	<div id="d_member">
-        	<div style="margin: 5px 0px">
+        	<div style="margin: 5px 0px"></div>
        		HOME > 회원관리 > 회원목록
        		<hr>
 	    	<div style="margin: 20px 0"></div>

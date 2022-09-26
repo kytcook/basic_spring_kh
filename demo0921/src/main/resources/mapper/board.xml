@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.mybatis.mapper.boardMapper">
    <resultMap type="java.util.Map" id="boardMap"/>
-   <resultMap id="bmMap" type="com.example.demo.vo.BoardMasterVO">
+   <resultMap type="com.example.demo.vo.BoardMasterVO" id="bmMap">
       <id property="b_no" column="b_no"/>
       <result property="b_title" column="b_title"/>
       <result property="b_writer" column="b_writer"/>
@@ -17,7 +17,7 @@
       <result property="bs_size" column="bs_size"/>
       <result property="bs_seq" column="bs_seq"/>
    </resultMap>
-   <resultMap id="bsMap" type="com.example.demo.vo.BoardSubVO"></resultMap>
+   <resultMap type="com.example.demo.vo.BoardSubVO" id="bsMap"></resultMap>
    <!-- 
    {key:[{DeptVO},{DeptVO},{DeptVO}]}
     -->
@@ -34,57 +34,62 @@
       					  ,#{key, jdbcType=CURSOR, mode=OUT, javaType=java.sql.ResultSet, resultMap=boardMap})}
    </select>
    
-   	<select id="proc_boardinsert" parameterType="map" resultType="map" statementType="CALLABLE">
+	<select id="proc_boardinsert" parameterType="map" resultType="map" statementType="CALLABLE">
 		{CALL proc_boardinsert(#{b_no mode=IN},#{b_title mode=IN},#{b_writer mode=IN},#{b_content mode=IN}
-		,#{b_pw mode=IN},#{b_group mode=IN},#{b_pos mode=IN},#{b_step mode=IN}
-		,#{result, jdbcType=NUMERIC, mode=OUT, javaType=int})}
+							  ,#{b_pw mode=IN},#{b_group mode=IN},#{b_pos mode=IN},#{b_step mode=IN}
+							  ,#{result, jdbcType=NUMERIC, mode=OUT, javaType=int})}
 	</select>
    
-   <update id="hitCount" parameterType="map">
-      UPDATE board_master_t
-        SET b_hit = b_hit+1
-      WHERE b_no = #{b_no}
-   </update>
-
-   <delete id="boardMDelete" parameterType="map">
-      delete from board_master_t
-      where b_no = #{b_no}
-   </delete>
+	<update id="hitCount" parameterType="map">
+		UPDATE board_master_t
+		  SET b_hit = b_hit+1
+		WHERE b_no = #{b_no}
+	</update>
    
-   <insert id="boardMInsert" parameterType="map">
-      INSERT INTO board_master_t(b_no, b_title, b_writer, b_content, b_pw, b_group, b_pos, b_step, b_date)
-      VALUES(#{b_no}, #{b_title},#{b_writer},#{b_content},#{b_pw}
-           , #{b_group},#{b_pos},#{b_step},to_char(sysdate, 'YYYY-MM-DD'))        
-   </insert>
+  	<delete id="boardMDelete" parameterType="map">
+		DELETE FROM board_master_t
+		 WHERE b_no = #{b_no}
+  	</delete>
    
-   <update id="boardMUpdate" parameterType="map">
-      UPDATE board_master_t
-         SET b_title = #{b_title}
-            ,b_writer = #{b_writer}
-            ,b_content = #{b_content}
-       WHERE b_no = #{b_no}
-   </update>
+	<insert id="boardMInsert" parameterType="map">
+		INSERT INTO board_master_t(b_no, b_title, b_writer, b_content, b_pw, b_group, b_pos, b_step, b_date)
+		VALUES(#{b_no}, #{b_title},#{b_writer},#{b_content},#{b_pw}
+		     , #{b_group},#{b_pos},#{b_step},to_char(sysdate, 'YYYY-MM-DD'))        
+	</insert>
+	
+ 	<insert id="boardSInsert" parameterType="map">
+		INSERT INTO board_sub_t(b_no, bs_seq, b_file, bs_size)
+		VALUES(#{b_no},#{bs_seq},#{b_file},#{bs_size})     	
+	</insert>  
+	
+   	<update id="boardMUpdate" parameterType="map">
+		UPDATE board_master_t
+		   SET b_title = #{b_title}
+		      ,b_writer = #{b_writer}
+		      ,b_content = #{b_content}
+		 WHERE b_no = #{b_no}
+ 	</update>
    
-   <update id="bStepUpdate" parameterType="map">
-      UPDATE board_master_t
-         SET b_step = b_step + 1
-       WHERE b_group = #{b_group}
-         AND b_step > #{b_step}
-   </update>
+  	<update id="bStepUpdate" parameterType="map">
+		UPDATE board_master_t
+		   SET b_step = b_step + 1
+		 WHERE b_group = #{b_group}
+		   AND b_step > #{b_step}
+  	</update>
          <!-- parameterType = (알리야스가 선언되어 있어서 map만 써도 된다) -->
-   <select id="getBNo" parameterType="map" resultType="int">
-      SELECT NVL((SELECT /*+index_desc(board_master_t BOARD_MASTER_NO_PK)*/ b_no
-                   FROM board_master_t
-                  WHERE rownum = 1),0)+1 b_no
-        FROM dual   
-   </select>
-   <select id="getBGroup" parameterType="map" resultType="int">
-      SELECT NVL((SELECT /*+index_desc(board_master_t i_bgroup)*/ b_group
-                   FROM board_master_t
-                  WHERE rownum = 1
-                    AND b_group > 0),0)+1 b_group
-        FROM dual   
-   </select>
+	<select id="getBNo" parameterType="map" resultType="int">
+		SELECT NVL((SELECT /*+index_desc(board_master_t BOARD_MASTER_NO_PK)*/ b_no
+		             FROM board_master_t
+		            WHERE rownum = 1),0)+1 b_no
+		  FROM dual   
+	</select>
+	<select id="getBGroup" parameterType="map" resultType="int">
+		SELECT NVL((SELECT /*+index_desc(board_master_t i_bgroup)*/ b_group
+		             FROM board_master_t
+		            WHERE rownum = 1
+		              AND b_group > 0),0)+1 b_group
+		  FROM dual   
+  	</select>
    <select id="boardList" parameterType="java.util.Map" resultType="map">
       SELECT bm.b_no, bm.b_title, bm.b_writer, bs.b_file, bm.b_hit
     		,bm.b_content, bm.b_date, bm.b_group, bm.b_pos, bm.b_step

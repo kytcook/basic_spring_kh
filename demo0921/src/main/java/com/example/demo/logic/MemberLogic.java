@@ -29,7 +29,7 @@ public class MemberLogic {
 		logger.info("login 호출");
 		MemberVO mVO = null;
 		mVO = memberDao.login(pMap);
-		logger.info("dao에서 반환된 mVO : "+mVO);
+		logger.info("dao에서 반환된 mVO ===> "+mVO);
 		return mVO;
 	}
    
