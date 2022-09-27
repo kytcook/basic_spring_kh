@@ -9,13 +9,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.dao.MemberDao;
+import com.example.demo.dao.MemoDao;
 import com.example.demo.vo.MemberVO;
 
+// ApplicationContext(BeanFactory기능을 내장하고 있다, 이른 인스턴스화를 제공하는 것이 디폴트이다)
+// >>, BeanFactory
 @Service
 public class MemberLogic {
    Logger logger = LoggerFactory.getLogger(MemberLogic.class);
    @Autowired(required=false)
    private MemberDao memberDao = null;
+   @Autowired(required=false)
+   private MemoDao memoDao = null;
    
    // 등록시에 프로시저를 사용하면 트랜잭션 처리를 따로 하지 않아도 된다.
    public int memberInsert(Map<String, Object> pMap) {
@@ -28,8 +33,17 @@ public class MemberLogic {
    public MemberVO login(Map<String, Object> pMap) {
 		logger.info("login 호출");
 		MemberVO mVO = null;
+		// 읽지않은 쪽지 담기
+		int cnt = 0;
 		mVO = memberDao.login(pMap);
 		logger.info("dao에서 반환된 mVO ===> "+mVO);
+		if(mVO !=null) {
+			String to_id = null;
+			to_id = mVO.getMem_id();
+			pMap.put("to_id", to_id);
+			cnt = memoDao.noReadMemo(pMap);
+			mVO.setCount(cnt);
+		}
 		return mVO;
 	}
    

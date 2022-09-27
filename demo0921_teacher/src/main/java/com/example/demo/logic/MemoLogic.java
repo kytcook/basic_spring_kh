@@ -3,6 +3,8 @@ package com.example.demo.logic;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,10 +30,39 @@ public class MemoLogic {
 		return sendMemoList;
 	}
 
-	public List<Map<String, Object>> receiveMemoList(Map<String, Object> pMap) {
+	public List<Map<String, Object>> receiveMemoList(Map<String, Object> pMap, HttpSession session) {
 		List<Map<String, Object>> receiveMemoList = null;
 		receiveMemoList = memoDao.receiveMemoList(pMap);
+		int cnt = memoDao.noReadMemo(pMap);
+		session.setAttribute("s_cnt", cnt);
 		return receiveMemoList;
+	}
+
+	public Map<String, Object> memoContent(Map<String, Object> pMap) {
+		Map<String, Object> rmap = null;
+		rmap = memoDao.memoContent(pMap);//select
+		if(rmap !=null) {
+			memoDao.readYnUpdate(pMap);//update
+		}
+		return rmap;
 	}
 	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

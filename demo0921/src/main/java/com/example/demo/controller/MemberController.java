@@ -33,6 +33,7 @@ public class MemberController {
       if(mVO != null) {
          session.setAttribute("smem_id", mVO.getMem_id());
          session.setAttribute("smem_name", mVO.getMem_name());
+         session.setAttribute("s_cnt", mVO.getCount());
       }
       return "redirect:/auth/index.jsp";
    }

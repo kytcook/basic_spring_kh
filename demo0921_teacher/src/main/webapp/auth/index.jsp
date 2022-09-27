@@ -2,6 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ page import="com.example.demo.vo.MemberVO" %>    
 <%
+	int s_cnt = 0;
+	if(session.getAttribute("s_cnt")!=null){
+		s_cnt = (Integer)session.getAttribute("s_cnt");		
+	}
 	String smem_id = (String)session.getAttribute("smem_id");
 	String smem_name = (String)session.getAttribute("smem_name");
 	out.print(smem_id+", "+smem_name);
@@ -18,6 +22,7 @@
 		}	
 	</style>
 	<script type="text/javascript">
+		let gm_no;
 		let to_id;//받는사람 아이디 - 사용자가 입력하는 것이 아니라 쪽지쓰기 로우에서 자동으로 담기
 		let to_name;//받는 사람 이름
 	//함수 선언은 head태그 안에서 한다
@@ -41,6 +46,38 @@
 		}
 		function logout(){
 			location.href="./logout.jsp";
+		}
+		function receiveMemoList(){
+			$("#dg_receiveMemoList").datagrid({
+				//오라클서버에서 요청한 결과를 myBatis를 사용하면 자동으로 컬럼명이 대문자
+				//단 List<XXVO>형태라면 그땐 소문자가 맞다
+			    method:"get"
+               ,url:"/memo/receiveMemoList?to_id=<%=smem_id%>" // 응답페이지는 JSON포맷의 파일이어야 함 (html이 아니라)
+	           ,onSelect: function(index, row){
+	        	   gm_no = row.NO;//데이터그리드 선택시 해당 로우의 아이디 담기		
+	           }
+			});				
+			$("#d_member").hide();
+			//after
+			$("#d_memberInsert").hide();
+			$("#d_receiveMemoList").show();
+			$("#d_sendMemoList").hide();			
+		}
+		function sendMemoList(){
+			$("#dg_sendMemoList").datagrid({
+				//오라클서버에서 요청한 결과를 myBatis를 사용하면 자동으로 컬럼명이 대문자
+				//단 List<XXVO>형태라면 그땐 소문자가 맞다
+			    method:"get"
+               ,url:"/memo/sendMemoList?from_id=<%=smem_id%>" // 응답페이지는 JSON포맷의 파일이어야 함 (html이 아니라)
+	           ,onSelect: function(index, row){
+	        	   gm_no = row.NO;//데이터그리드 선택시 해당 로우의 아이디 담기	
+	           }
+			});				
+			$("#d_member").hide();
+			//after
+			$("#d_memberInsert").hide();
+			$("#d_receiveMemoList").hide();
+			$("#d_sendMemoList").show();				
 		}
 		//순서지향적인, 절차지향적인 코딩 -> 모듈화 -> 비동기처럼 처리 하기(연습-await, async)
 		function memberList(){
@@ -82,6 +119,8 @@
 			$("#d_member").show();
 			//after
 			$("#d_memberInsert").hide();
+			$("#d_receiveMemoList").hide();
+			$("#d_sendMemoList").hide();
 		}
 		function memberInsert(){
 			alert("회원등록 호출 성공");
@@ -105,6 +144,38 @@
 		function memoFormClose(){
 			$("#dlg_memo").dialog('close');						
 		}
+		function memoContent(){
+			console.log("쪽지내용 보기");
+			$("#dlg_memoContent").dialog({
+				title: "쪽지내용확인",
+				// 쪽지내용을 DB에서 꼭 가져와야 하나요?
+				// 목록을 가져올때 가지고 있다가 출력해도 되지 않을까?(오라클 경유를 안해도 됨)
+				// 너라면 1번, 2번 중 몇 번을 선택할거니?
+			    // 기준 : 쪽지내용 확인 후 read_yn을 Y로 업데이트 해야 되니까.....그래서 난 1번
+			    // 한 건을 조회한 후에 그 자료구조가 null이 아닐때만 업데이트 해야 됨
+			    // 만일 500번이 일어나면 진행이 안되야 됨
+			    // 이 기능을 구현하는데 있어서 컨트롤계층의 메소드부터 호출이 되어야 하는 건지? 아님
+			    // 로직클래스에 메소드 호출만으로도 충분한지를 고민해 보기 -> 객체주입관계와 메소드 선언을 결정함
+			    // 설계자는 기능 담당자가 구현해야하는 페이지이름과 메소드, 그리고 파라미터와 리턴타입 모두를 
+			    // 다 정해놓고 담당자는 메소드안에 기능구현만 하도록 할것.
+				href:"/memo/memoContent?no="+gm_no,
+				modal: true,
+				closed: true
+			});
+			$("#dlg_memoContent").dialog('open');			
+		}
+		//하나를 바뀌면 다른 관련된 코드들도 모두 찾아서 변경해야 한다.
+		//대체로 반복되는 코드이고 어렵지는 않은데 꽤 귀찮게 하는 코드이고, 또한 에러가 발생할 수도 있다.
+		//유지보수 업무를 담당하고 있다 .. 가정
+		//가능하다면 최소한의 코드만 수정하고 유지보수가 이루질 수 있도록 코딩하기
+		//S급,A급, C급
+		function memoContentClose(){
+			//receiveMemoList();
+			//SPA은 과연 옳은 선택이었을 까?
+			location.href="/auth/index.jsp";//URL이 변경-> 기존에 요청이 끊어지고 새로운요청 -세션이나 쿠키가 바뀐다.
+			
+			$("#dlg_memoContent").dialog('close');						
+		}
 	</script>
 </head>
 <body>
@@ -114,6 +185,8 @@
 	$(document).ready(function(){	
 		$("#d_member").hide();
 		$("#d_memberInsert").hide();	
+		$("#d_sendMemoList").hide();	
+		$("#d_receiveMemoList").hide();	
 		$("#mem_id").textbox('setValue', 'apple');
 		$("#mem_pw").textbox('setValue', '123');
 		
@@ -161,7 +234,11 @@
 %>      
 <!--################ 로그아웃 영역 시작 ################-->      
 			 <div id="d_logout" align="center">
-			 	<div id="d_ok"><%=smem_name%>님 환영합니다.</div>
+			 	<div id="d_ok">
+			 		<%=smem_name%>님 환영합니다.
+			 		<br />
+			 		읽지않은 쪽지 수 : <%=s_cnt %> 통
+			 	</div>
 			 	<div style="margin:3px 0"></div>
 				<a id="btn_logout" href="javascript:logout()" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">
 				로그아웃
@@ -198,10 +275,10 @@
             <span>쪽지관리</span>
             <ul>
                 <li>
-                    <span>받은쪽지함</span>
+                    <a href="javascript:receiveMemoList()">받은쪽지함</a>
                 </li>
                 <li>
-                    <span>보낸쪽지함</span>
+                    <a href="javascript:sendMemoList()">보낸쪽지함</span>
                 </li>
             </ul>
         </li>
@@ -267,6 +344,49 @@
         	<div style="margin: 20px 0;"></div>
         	<div>회원등록화면 보여주기</div>
         	</div>
+        	
+
+<!-- 
+==========================================================================================
+	[ 받은 쪽지함 ] - 읽지않은 쪽지 수, to_id == smem_id
+==========================================================================================
+ -->        
+ 	<div id="d_receiveMemoList">
+       	<div style="margin: 5px 0;"></div>
+       	Home > 쪽지관리 > 받은쪽지함
+       	<hr>
+	    <table id="dg_receiveMemoList" class="easyui-datagrid" style="width:700px;height:250px"
+            data-options="singleSelect:true,collapsible:true,method:'get'">
+	        <thead>
+	            <tr>
+	                <th data-options="field:'NO',width:80">번호</th>
+	                <th data-options="field:'FROM_ID',width:100">보낸사람ID</th>
+	                <th data-options="field:'MEM_NAME',width:100">보낸사람 이름</th>
+	                <th data-options="field:'READ_YN',width:300,align:'left'">개봉여부</th>
+	                <th data-options="field:'BUTTON',width:100,align:'center'">버튼</th>
+	            </tr>
+	        </thead>
+    </table>      	
+    <div id="dlg_memoContent" footer="#btn_memoContent" class="easyui-dialog" 
+         title="쪽지쓰기" data-options="modal:true,closed:true" 
+         style="width:600px;height:400px;padding:10px">
+		<div id="btn_memoContent" align="right">
+			<a href="javascript:memoContentClose()" class="easyui-linkbutton" iconCls="icon-clear">닫기</a>
+		</div>
+	</div>         	
+       	
+ 	</div>	
+<!-- 
+==========================================================================================
+	[ 보낸 쪽지함 ]
+==========================================================================================
+ -->        	
+    <div id="d_sendMemoList">
+       	<div style="margin: 5px 0;"></div>
+       	Home > 쪽지관리 > 보낸쪽지함
+       	<hr>
+ 	</div>	     	
+        	
         <!--[[ 쪽지관리{받은쪽지함, 보낸쪽지함} ]]-->
     <div id="dlg_memo" footer="#btn_memo" class="easyui-dialog" 
          title="쪽지쓰기" data-options="modal:true,closed:true" 
