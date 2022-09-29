@@ -3,8 +3,8 @@
 <%@ page import="java.util.*, com.util.PageBar" %>    
 <%
 // jsp에서 자바코드(스크립틀릿)와 html코드의 작성 위치는 문제가 되지 않는다.
-// 왜냐하면 어차피 jsp는 서버에서 실행되고 그 결과가 text로 출력되는 것이므로
-// html과 처리 시적이 완전 다르니까...
+// 왜냐하면 어차피 jsp는 서버에서 실행되고 그 결과가 text로 출력되는 것이므로 
+// html과 처리 시점이 완전 다르니까...
 	boolean isOk = false;
 	if(request.getParameter("isOk")!=null){
 		isOk = Boolean.parseBoolean(request.getParameter("isOk"));
@@ -30,8 +30,8 @@
 <title>MVC기반의 계층형 게시판 구현하기</title>
 <%@ include file="../common/easyui_common.jsp" %>
 <script type="text/javascript">
-	let g_no=0; //그리드에서 선택이 바뀔때 마다 변경된 값이 저장됨.
-	let tb_value; // 사용자가 입력한 문자열 담기
+	let g_no=0;//그리드에서 선택이 바뀔때 마다 변경된 값이 저장됨.
+	let tb_value;//사용자가 입력한 문자열 담기
 	let isOk = false;
 	function dlgIns_save(){
 		//폼 전송 처리함.
@@ -41,35 +41,34 @@
 		$("#dlg_boardIns").dialog('close');
 	}
 	function getBoardList(){
-		// alert("getBoardList호출");     	   	
-		// 사용자가 선택한 콤보박스에 value가 담김 - b_title or b_content or b_writer 
+		//alert("getBoardList호출");
+		//사용자가 선택한 콤보박스에 value가 담김 - b_title, or b_content or b_writer
 		cb_value = user_combo;
-		tb_value = $("#tb_search").val(); // 사용자가 입력한 조건 검색 문자열
-		console.log("콤보박스 값: "+cb_value+", 사용자가 입력한 키워드: "+ tb_value);
-		location.href = "boardList.pj?cb_search="+cb_value+"&tb_search="+tb_value+"&b_date="+v_date;
-		
-	}	//////////////////////////여기내꺼 확인좀해보자!!!!!!!!!!!!!!!!!!!!!!!!!!
+		tb_value = $("#tb_search").val();//사용자가 입력한 조건 검색 문자열
+		console.log("콤보박스 값: "+ cb_value+", 사용자가 입력한 키워드: "+tb_value);
+		location.href = "boardList.sp4?cb_search="+cb_value+"&tb_search="+tb_value+"&b_date="+v_date;
+	}	
 	function boardDetail(bm_no){
 	}
     function fileDown(fname){
-		location.href="downLoad.jsp?b_file="+fname;
-    }
+		location.href="downLoad.jsp?bs_file="+fname;
+    }	
 </script>
 </head>
 <body>
 <script type="text/javascript">
-	let user_combo="b_title";//제목|내용|작성자
-	// 전변 - javascript에서는 선언만 하고 선택을 하지 않았거나 값이 할당되지 않으면 
-	// 그냥 null비교만 해서는 안된다.
+	let user_combo="bm_title";//제목|내용|작성자
+	//전변 - javascript에서는 선언만 하고 선택을 하지 않았거나 값이 할당되지 않으면 
+	//그냥 null비교만 해서는 안된다.
 	let v_date;//사용자가 선택한 날짜 정보 담기
-	//기본 날짜포맷을 재정의
+//기본 날짜포맷을 재정의
 	$.fn.datebox.defaults.formatter = function(date){
 		var y = date.getFullYear();
 		var m = date.getMonth()+1;
 		var d = date.getDate();
 		return y+'-'+(m<10? "0"+m:m)+'-'+(d<10? "0"+d:d);
 	}
-	//날짜 포맷을 적용	
+//날짜 포맷을 적용	
 	$.fn.datebox.defaults.parser = function(s){
 		var t = Date.parse(s);
 		if (!isNaN(t)){
@@ -86,7 +85,7 @@
 			},
 			onDblClickCell: function(index, field, value){
 				if("B_TITLE" == field){
-					location.href="./boardDetail.pj?b_no="+g_no;
+					location.href="./boardDetail.sp4?b_no="+g_no;
 					g_no = 0;
 					$("#dg_board").datagrid('clearSelections')
 				}
@@ -95,22 +94,22 @@
 	
 		//등록 날짜 정보를 선택했을 때
 		$('#db_date').datebox({
+			//왜? undefinded이었나?
 			onSelect: function(date){
 				//alert(date.getFullYear()+":"+(date.getMonth()+1)+":"+date.getDate());
-			const y = date.getFullYear();
-			const m = date.getMonth()+1;
-			const d = date.getDate();
-			v_date = y+"-"+(m<10?"0"+m:m)+"-"+(d<10?"0"+d:d);
-			console.log("사용자가 선택한 날짜 ===> "+v_date)
+				const y = date.getFullYear();
+				const m = date.getMonth()+1;
+				const d = date.getDate();
+				v_date = y+"-"+(m<10? "0"+m:m)+"-"+(d<10? "0"+d:d);
+				//console.log("사용자가 선택한 날짜 ==> "+v_date);
 			}
-		
 		});
 		
 		//검색 조건 콤보에 변경이 일어났을 때
 		$('#cb_search').combobox({
 			onChange:function(){
-			user_combo = $("#cb_search").combobox('getValue'); // b_title or b_content or b_writer
-			console.log(user_combo)
+				user_combo = $("#cb_search").combobox('getValue');//b_title or b_content or b_writer
+				console.log(user_combo)
 			}
 		});
 
@@ -126,6 +125,7 @@
 				}
 			}]
 		});
+
 	    /*===================== CRUD버튼 시작 ====================*/	    
 		//조회버튼 클릭했을 때
 	    $('#crudBtnSel').bind('click', function(){
@@ -154,7 +154,7 @@
                 <th data-options="field:'B_TITLE',width:350">제목</th>
                 <th data-options="field:'B_WRITER',width:80,align:'center'">작성자</th>
                 <th data-options="field:'B_DATE',width:100,align:'center'">작성일</th>
-                <th data-options="field:'B_FILE',width:170">첨부파일</th>
+                <th data-options="field:'BS_FILE',width:170">첨부파일</th>
                 <th data-options="field:'B_HIT',width:60,align:'center'">조회수</th>
             </tr>
         </thead>
@@ -171,60 +171,57 @@
 	}
 	else if(size>0){
 		//for(int i=0;i<size;i++){
-		for(int i = nowPage*numPerPage; i<(nowPage*numPerPage)+numPerPage; i++){
-			
+		for(int i=nowPage*numPerPage;i<(nowPage*numPerPage)+numPerPage;i++){
 			if(size == i) break;
 			Map<String,Object> rMap = boardList.get(i);
 %>	      
         	<tr>
-        		<td><%=rMap.get("B_NO")%></td>
-        		<td>
-        		
-<!-- 너 댓글이니? -->
-<%
-// 스크립틀릿 안에 작성한 코드는 라이프 사이클에서 service()들어간다.
-// 그러니까 메소드 선언 안됨
-	String imgpath = path+"..\\images\\";
-	if(Integer.parseInt(rMap.get("B_POS").toString()) > 0){
-		for(int j=0; j<Integer.parseInt(rMap.get("B_POS").toString());j++){
-			out.print("&nbsp;&nbsp;");
-		}//////end of for
+        		<td><%=rMap.get("BM_NO")%></td>
 
+        		<td>
+<!-- 너 댓글이니? -->     
+<%
+//스크립틀릿 안에 작성한 코드는 라이프 사이클에서 service()들어간다
+//그러니까 메소드 선언 안됨
+	String imgPath = path+"..\\images\\";
+	if(Integer.parseInt(rMap.get("BM_POS").toString()) > 0){
+		for(int j=0;j<Integer.parseInt(rMap.get("BM_POS").toString());j++){
+			out.print("&nbsp;&nbsp;&nbsp;");
+		}////////end of for	
+%>   		
+	<img src="<%=imgPath %>reply.gif"/>   		
+<%
+	}//너 댓글이니까.... 댓글 아이콘 추가
+%>   		
+<a href="javascript:boardDetail('<%=rMap.get("BM_NO")%>')" style="text-decoration:none;color:#000000">        		
+        		<%=rMap.get("BM_TITLE")%>
+</a>        		
+        		</td>
+
+        		<td><%=rMap.get("BM_WRITER")%></td>
+        		<td><%=rMap.get("BM_DATE")%></td>
+        		<td>
+<%
+	if(rMap.get("BS_FILE")!=null){
+%>        		
+        		<a href="javascript:fileDown('<%=rMap.get("BS_FILE") %>')">
+        		<%=rMap.get("BS_FILE")%>
+        		</a>
+<%
+	}
+	else{
 %>
-	<img src="<%=imgpath %>reply.gif"/>
+        		<%=rMap.get("BS_FILE")%>
 <%
 	}
 %>
         		
-<a href="javascript:boardDetail('<%=rMap.get("B_NO")%>')" style="text-decoration:none;color:#000000">
-        		<%=rMap.get("B_TITLE")%>
-</a>        		
         		</td>
-        		<td><%=rMap.get("B_WRITER")%></td>
-        		<td><%=rMap.get("B_DATE")%></td>
-        		<td>
+        		<td><%=rMap.get("BM_HIT")%></td>
+        	</tr>
 <%
-	if(rMap.get("B_FILE")!=null){
-%>
-        		
-        		<a href="javascript:fileDown('<%=rMap.get("B_FILE") %>')">
-        		<%=rMap.get("B_FILE")%>
-        		</a>
-<%
-		}
-	   else{
-		   %>
-		               <%=rMap.get("B_FILE")%>
-		   <% 
-		      }
-		   %>
-		                 </td>
-		                 <td><%=rMap.get("B_HIT")%></td>
-		              </tr>
-		   <%
-		         }// end of for
-		      }// end of else if
-
+		}// end of for
+	}// end of else if
 %>        	
         </tbody>
     </table>
@@ -258,10 +255,10 @@
 <!-- 페이지 네이션 추가 시작 -->
 	<div style="display:table-cell;vertical-align:middle; width:800px; background:#efefef; height:30; border:1px solid #ccc;">
 <%
-	String pagePath = "boardList.pj";
+	String pagePath = "boardList.sp4";
 	PageBar pb = new PageBar(numPerPage, size, nowPage, pagePath);
 	out.print(pb.getPageBar());
-%>
+%>	
 	</div>
 	
 <!-- 
@@ -290,33 +287,32 @@
 %>
 <!-- 글입력 화면 추가 시작 -->
     <div id="dlg_boardIns" footer="#tb_boardIns" class="easyui-dialog" title="글쓰기" data-options="modal:true,closed:true" style="width:600px;height:400px;padding:10px">
-		<form id="f_boardIns" method="post" enctype="multipart/form-data" action="./boardInsert.pj">
-        <!-- <form id="f_boardIns" method="get" action="./boardInsert.pj"> -->
-	    <input type="hidden" id="b_no" name="b_no" value="0">
-	    <input type="hidden" id="b_group" name="b_group" value="0">
-	    <input type="hidden" id="b_pos" name="b_pos" value="0">
-	    <input type="hidden" id="b_step" name="b_step" value="0">
+        <form id="f_boardIns" method="post" enctype="multipart/form-data" action="./boardInsert.sp4">
+        <!-- <form id="f_boardIns" method="get" action="./boardInsert.sp4"> -->
+	    <input type="hidden" id="bm_no" name="bm_no" value="0">
+	    <input type="hidden" id="bm_group" name="bm_group" value="0">
+	    <input type="hidden" id="bm_pos" name="bm_pos" value="0">
+	    <input type="hidden" id="bm_step" name="bm_step" value="0">
         	<table>
         		<tr>
         			<td width="100px">제&nbsp;&nbsp;&nbsp;목</td>
-        			<td width="500px"><input id="b_title" name="b_title" class="easyui-textbox" data-options="width:'250px'" required></td>
+        			<td width="500px"><input id="bm_title" name="bm_title" class="easyui-textbox" data-options="width:'250px'" required></td>
         		</tr>
         		<tr>
         			<td width="100px">작&nbsp;성&nbsp;자</td>
-        			<td width="500px"><input id="b_writer" name="b_writer" class="easyui-textbox" data-options="width:'150px'" required></td>
+        			<td width="500px"><input id="bm_writer" name="bm_writer" class="easyui-textbox" data-options="width:'150px'" required></td>
         		</tr>
-        	
         		<tr>
         			<td width="100px">내&nbsp;&nbsp;&nbsp;용</td>
-        			<td width="500px"><input id="b_content" name="b_content" class="easyui-textbox" data-options="multiline:'true',width:'350px', height:'90px'" required></td>
+        			<td width="500px"><input id="bm_content" name="bm_content" class="easyui-textbox" data-options="multiline:'true',width:'350px', height:'90px'" required></td>
         		</tr>
         		<tr>
         			<td width="100px">비&nbsp;&nbsp;&nbsp;번</td>
-        			<td width="500px"><input id="b_pw" name="b_pw" class="easyui-textbox" data-options="width:'100px'" required></td>
+        			<td width="500px"><input id="bm_pw" name="bm_pw" class="easyui-textbox" data-options="width:'100px'" required></td>
         		</tr>
         		<tr>
         			<td width="100px">첨부파일</td>
-        			<td width="500px"><input id="b_file" name="b_file" class="easyui-filebox" data-options="width:'350px'"></td>
+        			<td width="500px"><input id="bs_file" name="bs_file" class="easyui-filebox" data-options="width:'350px'"></td>
         		</tr>
         	</table>
         </form>

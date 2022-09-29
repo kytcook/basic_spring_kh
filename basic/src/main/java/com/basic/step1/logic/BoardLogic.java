@@ -3,17 +3,17 @@ package com.basic.step1.logic;
 import java.util.List;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.basic.step1.controller.BoardController;
 import com.basic.step1.dao.BoardDao;
+import com.vo.BoardMasterVO;
+
 @Service
 public class BoardLogic {
-	Logger logger = LoggerFactory.getLogger(BoardLogic.class);		
-	@Autowired(required=false)
+	Logger logger = Logger.getLogger(BoardLogic.class);
+	@Autowired
 	private BoardDao boardDao = null;
 	//로직에서는 그대로 모두 사용함 - RequestParam이나 RequestMapping, Model모두 필요없음
 	//공통된 관심사는 트랜잭션 처리 - 하나의 메소드에서 Dao에 두 개 메소드 호출
@@ -42,35 +42,35 @@ public class BoardLogic {
 		int b_group = 0;
 		//글번호 채번 - 한번
 		b_no = boardDao.getBNo();
-		pMap.put("b_no", b_no);
-		if(pMap.get("b_group")!=null) {
-			b_group = Integer.parseInt(pMap.get("b_group").toString());
+		pMap.put("bm_no", b_no);
+		if(pMap.get("bm_group")!=null) {
+			b_group = Integer.parseInt(pMap.get("bm_group").toString());
 		}
 		//댓글쓰기
 		if(b_group > 0) {
 			// 아래 코드는 내 뒤에 댓글이 있을 때만 처리가 된다
 			// 내 뒤에 댓글있으면 두번
 			boardDao.bStepUpdate(pMap);
-			pMap.put("b_pos", Integer.parseInt(pMap.get("b_pos").toString())+1);
-			pMap.put("b_step", Integer.parseInt(pMap.get("b_step").toString())+1);
+			pMap.put("bm_pos", Integer.parseInt(pMap.get("bm_pos").toString())+1);
+			pMap.put("bm_step", Integer.parseInt(pMap.get("bm_step").toString())+1);
 		}
 		//새글쓰기
 		else {
 			//새글쓰기에서는 댓글쓰기와는 다르게 그룹번호를 새로 채번해야 함
 			//새글일때 그룹번호 채번할 때 세번
 			b_group = boardDao.getBGroup();
-			pMap.put("b_group", b_group);
-			pMap.put("b_pos", 0);
-			pMap.put("b_step", 0);
+			pMap.put("bm_group", b_group);
+			pMap.put("bm_pos", 0);
+			pMap.put("bm_step", 0);
 		}
 		result = boardDao.boardMInsert(pMap);// 새글쓰기, 댓글쓰기 동시
 		//첨부파일이 있는 경우에만 board_sub_t 추가함
 		//첨부 파일이 있니?
 		if(pMap.get("bs_file")!=null && pMap.get("bs_file").toString().length()>1) {
-			pMap.put("b_no", b_no);
+			pMap.put("bm_no", b_no);
 			pMap.put("bs_seq", 1);
 			int result2 = boardDao.boardSInsert(pMap);
-			//logger.info("result2가 1이면 등록 성공===> "+result2);
+			logger.info("result2가 1이면 등록 성공===> "+result2);
 		}
 		return result;
 	}
@@ -84,5 +84,4 @@ public class BoardLogic {
 		result = boardDao.boardMDelete(pMap);
 		return result;
 	}
-
 }

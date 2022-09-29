@@ -1,5 +1,6 @@
 package com.basic.step1.dao;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -10,11 +11,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
+import com.vo.BoardMasterVO;
 
 @Service
 public class BoardDao {
-	Logger logger = LoggerFactory.getLogger(BoardDao.class);	
-	@Autowired(required=false)
+	Logger logger = LoggerFactory.getLogger(BoardDao.class);
+	@Autowired
 	private SqlSessionTemplate sqlSessionTemplate = null;
 
 	public List<Map<String, Object>> boardList(Map<String, Object> pMap) {
@@ -67,6 +69,7 @@ public class BoardDao {
 	}
 
 	public int boardMInsert(Map<String, Object> pMap) {
+		logger.info(pMap.toString());
 		int result = 0;
 		try {
 			result = sqlSessionTemplate.update("boardMInsert",pMap);
@@ -113,9 +116,6 @@ public class BoardDao {
 	public int boardSInsert(Map<String, Object> pMap) {
 		int result = 0;
 		try {
-			//현재는 첨부파일이 한개인 경우라서 상수처리함
-			//TODO - 멀티처리를 위해서는 무엇을 해야 할까?
-			pMap.put("bs_seq", 1);
 			result = sqlSessionTemplate.update("boardSInsert",pMap);
 			logger.info("result : "+result);
 		} catch (Exception e) {
@@ -123,5 +123,4 @@ public class BoardDao {
 		} 	
 		return result;
 	}
-	
 }

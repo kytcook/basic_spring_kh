@@ -35,9 +35,6 @@ public class HashMapBinder {
 		this.req = req;
 		realFolder = "C:\\Users\\user1\\git\\dev_java20220415\\dev_web\\src\\main\\webapp\\pds";
 	}
-	//바이너리 타입을 받을 땐 post방식으로 처리할것
-	//단 기존 request.getParameter로 값을 못 읽어옴
-	//스프링에서는 이를 위해 MultipartHttpServletRequest를 지원하고 있음
 	public HashMapBinder(MultipartHttpServletRequest mreq) {
 		this.mreq = mreq;
 	}
@@ -91,8 +88,6 @@ public class HashMapBinder {
 		}
 		logger.info(pMap);
 	}//////////end of bind
-	//Get방식 한글처리 - server.xml에서 URIEncoding="utf-8"
-	//Post방식 한글처리 - HangulConversion.toUTF(mreq.getParameter(key));
 	public void mbind(Map<String,Object> pMap) {
 		//사용자가 입력한 값을 담을 맵이 외부 클래스에서 인스턴스화 되어 넘어오니까
 		//초기화 처리 후 사용함
@@ -102,7 +97,7 @@ public class HashMapBinder {
 		while(em.hasMoreElements()) {
 			//key값 꺼내기
 			String key = em.nextElement();//b_title, b_writer, b_content, b_pw 등
-			pMap.put(key, HangulConversion.toUTF(mreq.getParameter(key)));
+			pMap.put(key, mreq.getParameter(key));
 		}
 		logger.info(pMap);
 	}//////////end of bind

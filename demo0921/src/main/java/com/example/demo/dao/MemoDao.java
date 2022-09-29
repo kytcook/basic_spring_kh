@@ -47,7 +47,7 @@ public class MemoDao {
 	}
 	
 	public List<Map<String, Object>> receiveMemoList(Map<String, Object> pMap) {
-		logger.info("sendMemoList 호출 성공 ==> "+pMap);//101
+		logger.info("receiveMemoList 호출 성공 ==> "+pMap);//101
 		List<Map<String, Object>> receiveMemoList = null;
 		receiveMemoList = sqlSessionTemplate.selectList("receiveMemoList", pMap);
 		logger.info(receiveMemoList.toString());//101
@@ -55,10 +55,11 @@ public class MemoDao {
 	}
 
 	public Map<String, Object> memoContent(Map<String, Object> pMap) {
-		Map<String, Object> rmap = null;
-		rmap = sqlSessionTemplate.selectOne("memoContent", pMap);
-		logger.info(rmap.toString());
-		return rmap;
+		Map<String, Object> rMap = null;
+		rMap = sqlSessionTemplate.selectOne("memoContent", pMap);
+		logger.info(rMap.toString());
+		logger.info("으으아아아"+rMap);
+		return rMap;
 	}
 
 	public void readYnUpdate(Map<String, Object> pMap) {

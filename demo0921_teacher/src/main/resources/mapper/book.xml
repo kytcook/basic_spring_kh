@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mybatis.mapper.bookMapper">
+	<select id="bookList" parameterType="java.util.Map" resultType="map">
+		SELECT bk_no, bk_title, bk_img, bk_author
+		      ,bk_publish, bk_hit, bk_info
+		  FROM book
+		<where>
+			<if test='bk_title !=null and choMode.equals("N")'>
+				AND bk_title LIKE #{bk_title}||'%'
+			</if>
+			<if test='bk_title !=null and choMode.equals("Y")'>
+				AND fn_choseong(bk_title) LIKE #{bk_title}||'%'
+			</if>
+		</where>    
+	  ORDER BY bk_title asc
+	</select>	
+</mapper>

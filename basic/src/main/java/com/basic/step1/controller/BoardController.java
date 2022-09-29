@@ -5,10 +5,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -18,22 +19,25 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.basic.step1.logic.BoardLogic;
-import com.util.FileUtil;
 import com.util.HangulConversion;
 import com.util.HashMapBinder;
+import com.vo.BoardMasterVO;
+import com.vo.MemberVO;
 
 @Controller
-@RequestMapping("/board/*")
+@RequestMapping(value="/board/*")
 public class BoardController {
-	Logger logger = LoggerFactory.getLogger(BoardController.class);	
-	@Autowired(required=false)
+	@Autowired
 	private BoardLogic boardLogic = null;
-	private final String filePath = "D:\\workspace_spring\\basic\\src\\main\\webapp\\pds"; // 파일이 저장될 위치
+	private Logger logger = LoggerFactory.getLogger(BoardController.class);	
+	private final String filePath = "C:\\kh_git2022\\dev_java20220415\\basic\\src\\main\\webapp\\pds\\"; // 파일이 저장될 위치
 	
 	/*
 	 * dev_web과 basic 비용 계산 해보기
@@ -84,21 +88,17 @@ public class BoardController {
 		Map<String,Object> pMap = new HashMap<>();
 		HashMapBinder hmb = new HashMapBinder(mpRequest);
 		hmb.mbind(pMap);
+		logger.info(pMap.toString());
 		if(!bs_file.isEmpty()) {//
-			String filename = HangulConversion.toUTF(bs_file.getOriginalFilename());
-			logger.info("한글 처리 테스트 : "+filename);
-			String savePath = "D:\\workspace_spring\\basic\\src\\main\\webapp\\pds";
-			//파일에 대한 풀 네임 담기
+			String filename = HangulConversion.toKor(bs_file.getOriginalFilename());
+			String savePath = "C:\\kh_git2022\\dev_java20220415\\basic\\src\\main\\webapp\\pds";
 			String fullPath = savePath+"\\"+filename;			
 			try {
-				//File객체는 파일명을 객체화 해줌
 				File file = new File(fullPath);
-				//board_sub_t에 파일크기를 담기 위해 계삭
 				byte[] bytes = bs_file.getBytes();
 				BufferedOutputStream bos =
 						new BufferedOutputStream(
 								new FileOutputStream(file));
-				//실제로 파일 내용이 채워짐
 				bos.write(bytes);
 				bos.close();
 				long size = file.length();
@@ -106,7 +106,6 @@ public class BoardController {
 				logger.info("size:"+d_size);
 				pMap.put("bs_file", filename);
 				pMap.put("bs_size", d_size);
-				logger.info("파일 정보 : "+pMap.get("bs_file")+", "+pMap.get("bs_size"));
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

@@ -9,5 +9,6 @@
 		<mapper resource="com/mybatis/mapper/member.xml" />
 		<mapper resource="com/mybatis/mapper/test.xml" />
 		<mapper resource="com/mybatis/mapper/board.xml" />
+		<mapper resource="com/mybatis/mapper/board2.xml" />
 	</mappers>
 </configuration>

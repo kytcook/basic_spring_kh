@@ -3,6 +3,8 @@ package com.example.demo.controller;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,10 +65,10 @@ public class MemoController {
 	}
 	
 	@GetMapping("receiveMemoList")
-	public String receiveMemoList(Model model, @RequestParam Map<String,Object> pMap) {
+	public String receiveMemoList(HttpSession session,Model model, @RequestParam Map<String,Object> pMap) {
 		List<Map<String,Object>> receiveMemoList = null;
-		receiveMemoList = memoLogic.receiveMemoList(pMap);
+		receiveMemoList = memoLogic.receiveMemoList(pMap, session);
 		model.addAttribute("receiveMemoList", receiveMemoList);
-		return "redirect:/memo/jsonReceiveMemoList.jsp";
-	}
+		return "forward:/memo/jsonReceiveMemoList.jsp";
+	}	
 }

@@ -3,9 +3,9 @@
 <mapper namespace="com.mybatis.mapper.memoMapper">
 	<resultMap type="java.util.Map" id="memoMap"></resultMap>
 	<insert id="memoInsert" parameterType="map">
-		INSERT INTO memo(no, from_id, to_id, memo_content, create_date, ready_yn)
-		VALUES(seq_memo_no.nextval,#{from_id},#{to_id}
-			, #{memo_content}, to_char(sysdate,'YYYY-MM-DD'),'N')
+		INSERT INTO memo(no, from_id, to_id, memo_content , create_date, read_yn)
+		VALUES(seq_memo_no.nextval, #{from_id}, #{to_id}
+		     , #{memo_content}, to_char(sysdate,'YYYY-MM-DD'), 'N')
 	</insert>
 	
  	<select id="noReadMemo" parameterType="map" resultType="int">

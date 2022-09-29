@@ -14,15 +14,15 @@
 	List<Map<String,Object>> boardList = 
 			(List<Map<String,Object>>)request.getAttribute("boardList");	
 	if(boardList !=null && boardList.size()>0){
-		rb_no = boardList.get(0).get("B_NO").toString();
-		rb_pw = boardList.get(0).get("B_PW").toString();
-		rb_title = boardList.get(0).get("B_TITLE").toString();
-		rb_writer = boardList.get(0).get("B_WRITER").toString();
-		rb_content = boardList.get(0).get("B_CONTENT").toString();
-		rb_date = boardList.get(0).get("B_DATE").toString();
-		rb_group = boardList.get(0).get("B_GROUP").toString();
-		rb_pos = boardList.get(0).get("B_POS").toString();
-		rb_step = boardList.get(0).get("B_STEP").toString();
+		rb_no = boardList.get(0).get("BM_NO").toString();
+		rb_pw = boardList.get(0).get("BM_PW").toString();
+		rb_title = boardList.get(0).get("BM_TITLE").toString();
+		rb_writer = boardList.get(0).get("BM_WRITER").toString();
+		rb_content = boardList.get(0).get("BM_CONTENT").toString();
+		rb_date = boardList.get(0).get("BM_DATE").toString();
+		rb_group = boardList.get(0).get("BM_GROUP").toString();
+		rb_pos = boardList.get(0).get("BM_POS").toString();
+		rb_step = boardList.get(0).get("BM_STEP").toString();
 	}
 %>    
 <!DOCTYPE html>
@@ -68,7 +68,7 @@
 		if(u_pw == db_pw){
 			$.messager.confirm('Confirm', '정말 삭제할거야?',function(r){
 				if(r){
-					location.href="./boardDelete.sp4?b_no="+<%=rb_no%>;
+					location.href="./boardDelete.pj?b_no="+<%=rb_no%>;
 				}
 			});
 		}else{
@@ -118,7 +118,7 @@
         <!-- 바이너리(문자열+숫자) 파일을 전송할 때는 반드시 post방식 처리 첨부파일 처리시 -->
         <!-- base2, base8, base16, base64 텍스트 파일(문자열치환-파일크기가 커진다) -->
         <!-- <form id="f_boardIns" method="post" enctype="multipart/form-data" action="./boardInsert.pj"> -->
-        <form id="f_boardUpd" method="get" action="./boardUpdate.sp4">
+        <form id="f_boardUpd" method="get" action="./boardUpdate.pj">
         <!-- 태그안에 자바변수 사용가능한가? 가능함 -->
 	    <input type="hidden" id="b_no" name="b_no" value="<%=rb_no%>">
         	<table>

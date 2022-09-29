@@ -24,8 +24,8 @@
 			$("#memo_content").textbox('setValue', '<%=memo_content%>')
 		});
 	</script>
-	<label for="mem_content">내용</label>
-	<input id="memo_content" name="memo_content" class="easyui-linkbutton" multiline="true" style="width:300px;height:70px"/>
+	<label for="memo_content">내용</label>
+	<input id="memo_content" name="memo_content" class="easyui-textbox" multiline="true" style="width:300px;height:70px"/>
 	<br />
 	<a href="javascript:memoContentClose()" class="easyui-linkbutton" iconCls="icon-ok">확인</a>
 </body>

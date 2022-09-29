@@ -18,7 +18,7 @@ import com.example.demo.vo.MemberVO;
 
 @Controller
 @RequestMapping("/member/*")
-@SessionAttributes({"smem_id","smem_name"})
+@SessionAttributes({"smem_id","smem_name", "s_cnt"})
 public class MemberController {
    Logger logger = LoggerFactory.getLogger(MemberController.class);
    @Autowired(required=false)
