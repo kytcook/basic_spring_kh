@@ -12,13 +12,21 @@
 	}
 </style>
 <script type="text/javascript">
+	function makeInfo(result){
+		console.log(result);
+		let picHTML = "";
+		return picHTML;
+	}
 	function startMethod(td){
 		$.ajax({
 			method: "GET",
 			url: "./pictureInfo.jsp?p_no=2",
 			data: param,
 			success:function(result) {// result -> searchResult.jsp -> html태그들이다.
-				console.log(result);// JSON
+				console.log(result);// JSON -> List<Map> -> String(java코드) -> JS -> JSON.stringyfy, JSON.parse -> Array형전환
+				let picHTML = makeInfo(result);
+				$("#d_detail").html(picHTML);
+				// 화면에 렌더링되기 전에 스타일 처리 선행되어야 함.
 			}//end of succsess
 			,error:function(e){
 				$("#d_search").text(e.responseText);// 에러메시지 출력됨 - 힌트 - 디버깅
