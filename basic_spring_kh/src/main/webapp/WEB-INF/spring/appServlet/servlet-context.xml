@@ -23,6 +23,12 @@
 	}
 	/WEB-INF/views/getDetpList.jsp
 	-->
+	<!-- 
+	HandlerMapping : servlet-context.xml은 요청과 관련된 객체이다.
+	url과 관련된 controller나 @(어노테이션), ViewResolver, Interceptor, MultipartResolver 등의 설정을 해준다.
+	-
+	Controller의 메서드에서 반환하는 문자열 앞 뒤에 붙힐 경로 정보를 세팅한다.
+	 -->
 	<beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 		<beans:property name="prefix" value="/WEB-INF/views/" />
 		<beans:property name="suffix" value=".jsp" />
@@ -31,8 +37,15 @@
 		class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
 		<beans:property name="maxUploadSize" value="10485760" /><!-- 파일크기 제약을 준다. 1024 x 1024 -->
 	</beans:bean>
+	<!-- 스캔할 bean들이 모여있는 패키지를 지정한다. -->
 	<context:component-scan base-package="com.basic.step1" />
-<!-- 	<context:component-scan base-package="com.mvc.kh" /> -->
-	
+<!-- <context:component-scan base-package="com.mvc.kh" /> -->
+
+	<!-- 
+	위와같이 서블릿에서, prefix(접두사)로 경로를 suffix(접미사)로 확장자를 붙여주기 때문에
+	컨트롤러에서 일일이 전체경로를 입력하거나 .jsp를 붙이지 않아도 되도록 도와준다.
+	또한, 스캔할 bean들이 모여있는 패키지를 지정함으로써 스프링에서 사용하는 bean을 일일이 xml에 선언하지 않고도 필요한 것을
+	어노테이션(@)으로 자동 인식하게 한다.
+	-->
 	
 </beans:beans>
