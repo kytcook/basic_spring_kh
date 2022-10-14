@@ -2,12 +2,12 @@
 <web-app version="2.5" xmlns="https://java.sun.com/xml/ns/javaee"
 	xmlns:xsi="https://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="https://java.sun.com/xml/ns/javaee https://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
-
+<!-- DispatcherServlet : 클라이언트의 Request요청을 가로챈다.  -->
 	<!-- The definition of the Root Spring Container shared by all Servlets and Filters -->
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
-		<param-value>/WEB-INF/spring/root-context.xml<!-- 이 xml코드는 서버가 기동할때 한번 켜지면 계속 유지 -->
-		</param-value>			
+		
+		<param-value>/WEB-INF/spring/root-context.xml</param-value><!-- 이 xml코드는 서버가 기동할때 한번 켜지면 계속 유지 -->
 	</context-param>
 	
 	<!-- Creates the Spring Container shared by all Servlets and Filters -->

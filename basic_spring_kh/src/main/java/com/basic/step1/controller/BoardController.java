@@ -93,6 +93,8 @@ public class BoardController {
 	@GetMapping("boardList.sp4")
 	public String boardList(Model model, @RequestParam Map<String, Object> pMap) {
 		logger.info("boardList 호출 성공");
+		// List라는 자료구조에 Map의 형태(keyd와 value)로 저장한다.
+		// List는 유동적인 배열이다.
 		List<Map<String, Object>> boardList = null;
 		// 여기여기....필요할 때 인스턴스화 해서 -> 게으른 인스턴스화 - 스프링에서 대단히 중요한 위치의 문제.
 //		boardLogic = new Board3Logic(); // 전변인데 주소번지는 다르다..
