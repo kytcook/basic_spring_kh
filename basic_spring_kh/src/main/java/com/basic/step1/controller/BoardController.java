@@ -32,6 +32,7 @@ public class BoardController {
 	@Autowired(required = false)
 	private BoardLogic boardLogic = null;
 	private final String filePath = "D:\\java_study\\workspace_spring\\basic_spring_kh\\src\\main\\webapp\\pds\\";//파일이 저장될 위치
+	
 	@ResponseBody
 	@GetMapping(value="helloworld.sp4", produces="text/plain;charset=UTF-8")
 	public String helloWorld() {
@@ -59,6 +60,8 @@ public class BoardController {
 		logger.info("testParam 호출 성공"+mem_id);
 		return "redirect:/test/testList.jsp";
 	}
+	
+	
 	/*
 	 * Board3Controller.boardList 에서 발췌 / dev_web과 basic 비용 계산 해보기
 	 * Map선언만함 - @RequestParam
@@ -73,6 +76,8 @@ public class BoardController {
 		result = boardLogic.boardDelete(pMap);
 		return "redirect:boardList.sp4";
 	}
+	
+	
 	@GetMapping("boardUpdate.sp4")
 	public Object boardUpdate(@RequestParam Map<String, Object> pMap) {
 		logger.info("boardUpdate 호출 성공");
@@ -82,14 +87,18 @@ public class BoardController {
 		String path = "redirect:boardList.sp4";
 		return path;
 	}	
+	
+	
 	@GetMapping("boardDetail.sp4")
 	public String boardDetail(Model model, @RequestParam Map<String, Object> pMap) {
-		logger.info("boardList 호출 성공");
+		logger.info("boardDetail 호출 성공");
 		List<Map<String, Object>> boardList = null;
 		boardList = boardLogic.boardDetail(pMap);
 		model.addAttribute("boardList", boardList);
 		return "forward:read.jsp";
 	}
+	
+	// http://localhost:9000/step1/board/boardList.sp4
 	@GetMapping("boardList.sp4")
 	public String boardList(Model model, @RequestParam Map<String, Object> pMap) {
 		logger.info("boardList 호출 성공");

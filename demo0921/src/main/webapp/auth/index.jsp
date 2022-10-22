@@ -21,6 +21,7 @@
 		  text-decoration: none;
 		}	
 	</style>
+	<span id="auth_id"></span>
 	<script type="text/javascript">
 		let gm_no;
 		let to_id;//받는사람 아이디 - 사용자가 입력하는 것이 아니라 쪽지쓰기 로우에서 자동으로 담기
@@ -41,8 +42,9 @@
 		}
 		function login(){
 			const tb_id = $("#mem_id").val();
-			const tb_pw = $("#mem_pw").val();			
+			const tb_pw = $("#mem_pw").val();	
 			location.href="/member/login?mem_id="+tb_id+"&mem_pw="+tb_pw;
+			
 		}
 		function logout(){
 			location.href="./logout.jsp";

@@ -28,12 +28,14 @@ public class BoardLogic {
 		}
 		return boardList;
 	}
+	
 	public List<Map<String, Object>> boardList(Map<String, Object> pMap) {
 		logger.info("boardList 호출 성공");
 		List<Map<String,Object>> boardList = null;
 		boardList = boardDao.boardList(pMap);
 		return boardList;
 	}
+	
 	// 하나의 메소드 안에서 DAO의 여러 메소드를 호출할 수 있다. - 트랜잭션처리 공통된 관심사를 갖는 부분
 	// 로직은 여러 가지의 처리를 할 수 있고 이에 따른 선택기준이 필요한 부분
 	public int boardInsert(Map<String, Object> pMap) {

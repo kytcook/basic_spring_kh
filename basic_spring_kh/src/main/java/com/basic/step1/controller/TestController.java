@@ -36,8 +36,8 @@ public class TestController {
 		List<Map<String, Object>> testList = null;
 		testList = testLogic.testList(pmap);
 		logger.info(testList.toString());
-		return "forward:testList.jsp";
-//		return "test/testList";
+//		return "forward:testList.jsp";
+		return "test/testList";
 	}
 	// localhost:9000/step1/test/testDeleteAll.sp4?testnos=1/3/5
 	@GetMapping("testDeleteAll")
