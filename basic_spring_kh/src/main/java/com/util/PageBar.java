@@ -12,7 +12,7 @@ public class PageBar {
 	private int numPerPage;// 10개씩이다
 	// 블럭당 디폴트 페이지 수 - 여기서는 일단 2개로 정함.
 	// 페이지 수에 대한 블록
-	private int pagePerBlock=2;
+	private int pagePerBlock=5;
 	// 총페이지 수
 	private int totalPage;// (int)ceil(47/10.0)
 	// 총블럭 수
