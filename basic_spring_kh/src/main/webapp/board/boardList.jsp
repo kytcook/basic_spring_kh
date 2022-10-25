@@ -257,20 +257,6 @@
 	out.print(pb.getPageBar());
 %>
 	</div>
-	
-<!-- 
-<script type="text/javascript">
-	$('#pn_board').pagination({
-		pageList: [5,10,15,20]
-	   ,pageSize:5
-	   ,layout:['list','sep','first','prev','links','next','last','sep']
-	   ,onSelectPage:function(pageNumber, pageSize){
-			//alert('pageNumber:'+pageNumber+',pageSize:'+pageSize);
-		   pageMove(pageNumber, pageSize);
-		}
-	});///////////////end of pagination	
-</script>	
- -->
 <!-- 페이지 네이션 추가   끝  -->
 <%
 	String gubun = request.getParameter("gubun");

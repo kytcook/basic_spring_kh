@@ -25,7 +25,7 @@ public class BoardLogic {
 		boardList = boardDao.boardList(pMap);
 		if(boardList!=null && boardList.size()==1) {
 			boardDao.hitCount(pMap);
-		}
+		} 
 		return boardList;
 	}
 	public List<Map<String, Object>> boardList(Map<String, Object> pMap) {

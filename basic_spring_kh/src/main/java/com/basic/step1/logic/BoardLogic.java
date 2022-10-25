@@ -23,7 +23,7 @@ public class BoardLogic {
 		logger.info("boardDetail 호출 성공");
 		List<Map<String,Object>> boardList = null;
 		boardList = boardDao.boardList(pMap);
-		if(boardList!=null && boardList.size()==1) {
+		if(boardList!=null && boardList.size()==1) {//.size는 Collections Framework의 ArrayList의 길이를 확인
 			boardDao.hitCount(pMap);
 		}
 		return boardList;
