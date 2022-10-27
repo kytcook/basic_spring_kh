@@ -224,7 +224,7 @@
 %>        	
         </tbody>
     </table>
-<!-- 툴바 추가 중 조건검색 화면 시작 -->    
+	<!-- 툴바 추가 중 조건검색 화면 시작 -->    
     <div id="tb" style="padding:2px 5px;">
                                     <!-- 
                                     req.getParameter("cb_search"):String
