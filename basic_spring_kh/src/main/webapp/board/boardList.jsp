@@ -11,9 +11,11 @@
 	}
 	List<Map<String,Object>> boardList = //유지의문제 - DB를 경유해야한다 ->servlet
 			(List<Map<String,Object>>)request.getAttribute("boardList");//sql문을 넘겨넘겨 받아서 가지고옴
+	/* 데이터를 가져오는지 화면에서 확인해봅시다. */
+	out.print(boardList);		
 	int size = 0;
 	if(boardList!=null){
-		size = boardList.size();
+		size = boardList.size();//컬럼의 개수
 	}
 	// 한 페이지에 출력될 로우의 수를 담음
 	int numPerPage = 10;
@@ -222,7 +224,7 @@
 %>        	
         </tbody>
     </table>
-<!-- 툴바 추가 중 조건검색 화면 시작 -->    
+	<!-- 툴바 추가 중 조건검색 화면 시작 -->    
     <div id="tb" style="padding:2px 5px;">
                                     <!-- 
                                     req.getParameter("cb_search"):String

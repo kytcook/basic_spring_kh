@@ -24,6 +24,7 @@
 		rb_pos = boardList.get(0).get("B_POS").toString();
 		rb_step = boardList.get(0).get("B_STEP").toString();
 	}
+	out.print(boardList);
 %>
 <!DOCTYPE html>
 <html>
