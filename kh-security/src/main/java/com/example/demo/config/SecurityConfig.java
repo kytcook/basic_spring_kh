@@ -37,7 +37,9 @@ public class SecurityConfig {
 	        	.anyRequest().permitAll()//나머지는 제낀다
 	        	.and()
 	        	.formLogin()
-	        	.loginPage("/loginForm");
+	        	.loginPage("/loginForm")
+	        	.loginProcessingUrl("/loginAction")// loginForm에서 로그인 클릭하면 loginAction요청을 듣고 -> 시큐리티가 인터셉트하여 대신 로그인 진행을 한다.
+	        	.defaultSuccessUrl("/");
 	        return http.build();
 	}
 }
