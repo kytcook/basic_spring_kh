@@ -13,9 +13,11 @@ import com.basic.step1.dao.BoardDao;
 @Service
 public class BoardLogic {
 	Logger logger = LoggerFactory.getLogger(BoardLogic.class);
+	
 	// Autowired를 통해 객체를 주입받고 싶다면, 전체이름을 쓴다. 첫문자 소문자, 이어지는 단어 대문자 낙타표기법
 	@Autowired(required=false)
 	private BoardDao boardDao = null;
+	
 	// 로직에서는 그대로 모두 사용함 - RequestParam이나 RequestMapping, Model 모두 필요 없음
 	// 공통된 관심사는 트랜잭션 처리 - 하나의 메소드에서 Dao에 두 개 메소드 호출
 	// board_master_t, board_sub_t
